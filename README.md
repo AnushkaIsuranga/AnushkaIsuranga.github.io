@@ -1,5 +1,5 @@
 # My GitHub Portfolio
----
+
 Welcome to my GitHub portfolio! Here you'll find a collection of my projects showcasing my skills, creativity, and passion for coding. This portfolio highlights my work in various domains, including web development, software engineering, and more.
 
 ## About Me
@@ -19,7 +19,3 @@ Feel free to reach out to me via the following channels:
 - **LinkedIn:** linkedin.com/in/anushka-isuranga-547435260
 
 Thank you for visiting my portfolio! I hope you find my projects interesting and insightful.
-
----
-
-Feel free to further personalize this to better fit your projects and style.
