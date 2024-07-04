@@ -16,6 +16,6 @@ I am currently studying at the National Institute of Business Management, pursui
 Feel free to reach out to me via the following channels:
 
 - **Email:** isuranga880@gmail.com / isuranga880@hotmail.com /isuranga880@yahoo.com
-- **LinkedIn:** linkedin.com/in/anushka-isuranga-547435260
+- **LinkedIn:** www.linkedin.com/in/anushka-isuranga-547435260
 
 Thank you for visiting my portfolio! I hope you find my projects interesting and insightful.
