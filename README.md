@@ -48,7 +48,7 @@ To run the portfolio locally, follow these steps:
 
 1. **Clone this repository:**
    ```bash
-   git clone https://github.com/AnushkaIsuranga/your-repo-name.git
+   git clone https://github.com/AnushkaIsuranga/AnushkaIsuranga.github.io.git
    ```
 2. **Install dependencies:**
    ```bash
