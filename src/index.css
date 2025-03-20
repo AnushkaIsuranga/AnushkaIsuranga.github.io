@@ -1,3 +1,56 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components{
+    .hover-scale-up {
+        @apply transform scale-100;
+    }
+
+    .hover-scale-up:hover {
+        @apply transform scale-105;
+    }
+
+    .hover-scale-none:hover {
+        @apply transform scale-100;
+    }
+  
+    .nav-item{
+        @apply  text-white font-semibold hover:font-extrabold transition-all duration-75 cursor-pointer
+    }
+
+    .nav-item-beginig{
+        @apply ml-3
+    }
+
+    .nav-item-end{
+        @apply mr-3
+    }
+
+    .langframe-topics{
+        @apply text-3xl text-center text-white lg:text-4xl font-semibold font-mono p-5
+    }
+
+    .langframe-buttons{
+        @apply inline-flex justify-center gap-3 items-center pl-3 pr-3 p-1 border-2 rounded-lg text-lg lg:text-xl text-white hover:font-bold transition-all duration-100
+    }
+
+    .timeline-icon{
+        @apply h-20 w-20 bg-cyan-800 rounded-full shadow-md border-4 border-white xs:absolute md:mx-auto md:right-0 md:left-0
+    }
+    .timeline-container{
+        @apply relative pt-2 xs:pl-24 xs:pt-0 md:w-1/2 md:ml-auto md:pl-16 hover-scale-none transition-transform sm:hover-scale-up
+    }
+
+    .timeline-container-left{
+        @apply md:ml-0 md:mr-auto md:pl-0 md:pr-16
+    }
+
+    .timeline-pointer{
+        @apply absolute inset-0 left-8 h-4 w-4 transform rotate-45 bg-white xs:top-7 xs:left-[88px] md:left-14
+    }
+
+    .timeline-pointer-left{
+        @apply md:left-auto md:right-14
+    }
+}
