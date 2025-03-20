@@ -35,7 +35,7 @@ export default class Projects extends PureComponent {
     ];
     
     return (
-      <section id="Projects" className="antialiased bg-gray-100 text-gray-800 p-10 pb-24 pt-0 relative scroll-mt-24 z-20">
+      <section id="Projects" className="antialiased bg-gray-100 text-gray-800 p-10 pb-24 pt-0 relative scroll-mt-24 z-40">
         <div className="container mx-auto px-6 space-y-8">
           <div className="text-center rounded-3xl bg-slate-700 p-5 text-white text-3xl md:text-5xl font-semibold font-mono">
             <b>Projects</b>
@@ -66,36 +66,53 @@ export default class Projects extends PureComponent {
         </div>
         {/* Modal */}
         {selectedProject !== null && (
-          <div className="fixed inset-0 z-50 flex items-center h-full overflow-hidden justify-center bg-black backdrop-blur-sm bg-opacity-90">
-            <div className="bg-white rounded-lg shadow-lg max-w-lg w-full h-1/2 sm:h-fit relative m-3 md:m-0">
+          <div
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+            onClick={this.closeModal} // Close modal when clicking outside
+          >
+            <div
+              className="bg-white rounded-lg shadow-lg max-w-lg w-full h-1/2 sm:h-fit relative m-3 md:m-0"
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
+            >
               <button
-                onClick={this.closeModal}
-                className="absolute text-2xl top-2 right-4 text-gray-500 transform transition-colors duration-300 hover:text-gray-800"
+                onClick={this.closeModal} // Close modal when clicking the close button
+                className="absolute text-2xl top-2 right-4 text-gray-500 transition-colors hover:text-gray-800"
               >
                 &times;
               </button>
-              <div 
+              <div
                 className="sm:h-48 h-40 bg-gray-300 rounded-t-lg flex items-center justify-center"
                 style={{
-                          backgroundImage: `url(${projects[selectedProject].image})`,
-                          backgroundSize: "cover",
-                          backgroundPosition: "center",
-                        }}/>
-              <div className="overflow-y-auto max-h-48 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 p-6">
+                  backgroundImage: `url(${projects[selectedProject].image})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              />
+              <div className="overflow-y-auto max-h-48 p-6">
                 <h4 className="text-lg font-semibold text-gray-800">
                   {projects[selectedProject].title}
                 </h4>
-                <p className="text-sm text-gray-700 mt-4 text-justify" 
-                  dangerouslySetInnerHTML={{ __html: projects[selectedProject].detailedDescription}}/>
+                <p
+                  className="text-sm text-gray-700 mt-4 text-justify"
+                  dangerouslySetInnerHTML={{
+                    __html: projects[selectedProject].detailedDescription,
+                  }}
+                />
                 <p className="text-lg text-gray-700 mt-4 inline-flex space-x-4">
-                  <a href={projects[selectedProject].githubRepo}
-                    className="text-gray-500 transform transition-colors duration-300 hover:text-gray-800"
-                    target="_blank">
+                  <a
+                    href={projects[selectedProject].githubRepo}
+                    className="text-gray-500 hover:text-gray-800"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <FiGithub />
                   </a>
-                  <a href={projects[selectedProject].liveDemo}
-                    className="text-gray-500 transform transition-colors duration-300 hover:text-gray-800"
-                  target="_blank">
+                  <a
+                    href={projects[selectedProject].liveDemo}
+                    className="text-gray-500 hover:text-gray-800"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <FiGlobe />
                   </a>
                 </p>
@@ -103,6 +120,7 @@ export default class Projects extends PureComponent {
             </div>
           </div>
         )}
+
 
       </section>
     )

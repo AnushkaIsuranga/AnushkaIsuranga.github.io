@@ -4,7 +4,7 @@ export default class Navbar extends PureComponent {
     
   render() {
     return (
-        <section className='relative z-30 flex text-center justify-center'>
+        <section className='relative z-50 flex text-center justify-center'>
           <nav className='fixed text-center grid grid-cols-5 text-sm lg:text-lg items-center lg:mt-6 h-14 lg:border-2 w-full lg:w-3/5 rounded-none lg:rounded-3xl sm:divide-x divide-gray-600 bg-slate-700 bg-opacity-60 backdrop-blur-lg leading-none'>
               <div className='nav-item nav-item-begining'>
                 <button>

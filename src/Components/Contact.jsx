@@ -11,7 +11,8 @@ export default class Contact extends PureComponent {
       message: '',
       isSending: false,
       successMessage: '',
-      errorMessage: ''
+      errorMessage: '',
+      modalOpen: false // Add state to track modal open/close
     };
   }
 
@@ -26,7 +27,7 @@ export default class Contact extends PureComponent {
     this.setState({ isSending: true, successMessage: '', errorMessage: '' });
 
     emailjs
-    .sendForm('service_q0gnjbi', 'template_cyhg4at', e.target, 'nDNf3GocCkCuyD2ii')  
+      .sendForm(process.env.REACT_APP_EMAILJS_SERVICE_ID, process.env.REACT_APP_EMAILJS_TEMPLATE_ID, e.target, process.env.REACT_APP_EMAILJS_USER_ID)
       .then(
         (result) => {
           this.setState({
@@ -46,11 +47,19 @@ export default class Contact extends PureComponent {
       );
   };
 
+  // Method to toggle modal visibility
+  toggleModal = () => {
+    this.setState((prevState) => ({ modalOpen: !prevState.modalOpen }));
+  };
+
   render() {
-    const { name, email, message, isSending, successMessage, errorMessage } = this.state;
+    const { name, email, message, isSending, successMessage, errorMessage, modalOpen } = this.state;
 
     return (
-      <section id="Contact" className="antialiased bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 text-white relative items-center">
+      <section
+        id="Contact"
+        className={`antialiased bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 text-white relative items-center z-20`}
+      >
         <div className="grid grid-cols-1 gap-x-9 md:grid-cols-2 items-center p-12 pb-8">
           <form onSubmit={this.handleSubmit} className="bg-white text-gray-800 w-full h-full p-8 rounded-lg shadow-lg">
             <div className="text-center bg-gradient-to-r from-indigo-500 to-purple-600 p-4 rounded-md text-white text-2xl md:text-3xl font-mono font-bold mb-6">
@@ -98,7 +107,7 @@ export default class Contact extends PureComponent {
                   onChange={this.handleChange}
                   rows="5"
                   required
-                  className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full px-4 py-2 max-h-36 min-h-36 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   placeholder="Write your message here..."
                 ></textarea>
               </div>
