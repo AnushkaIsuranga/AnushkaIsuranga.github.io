@@ -37,7 +37,7 @@ export default class Projects extends PureComponent {
       <section id="Projects" className="antialiased bg-gray-100 text-gray-800 p-10 pb-24 pt-0 relative scroll-mt-24 z-40">
         <div className="container mx-auto px-6 space-y-8">
           <div className="text-center rounded-3xl bg-slate-700 p-5 text-white text-3xl md:text-5xl font-semibold font-mono">
-            <b>Projects</b>
+            <b>Projes</b>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
