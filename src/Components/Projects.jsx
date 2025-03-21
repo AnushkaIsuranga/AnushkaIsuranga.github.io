@@ -7,7 +7,7 @@ export default class Projects extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      selectedProject: null, // Track which project is selected
+      selectedProject: null,
     };
   }
 
@@ -22,7 +22,6 @@ export default class Projects extends PureComponent {
   render() {
     const { selectedProject } = this.state;
 
-    // Sample project data (replace with dynamic data if needed)
     const projects = [
       {
         title: "Duskwood Hospital Appointment System",
