@@ -15,15 +15,10 @@ The portfolio is designed to give an overview of:
 
 ## 🛠 Tools & Technologies Used
 
-### Frontend:
 - **React**: For building dynamic and interactive user interfaces.
 - **Tailwind CSS**: For styling the website with utility-first CSS.
 - **HTML5 & CSS3**: The backbone of web development, ensuring structure and style.
 - **JavaScript**: For adding interactivity and client-side functionality.
-
-### Backend:
-- **Java (Spring Boot)**: Used in some of my backend projects to showcase my expertise in backend development.
-- **MySQL**: For managing and storing data in my projects.
 
 ### Deployment:
 - **Vite**: For building and bundling the project.
