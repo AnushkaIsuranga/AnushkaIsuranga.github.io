@@ -42,25 +42,6 @@ The portfolio is designed to give an overview of:
 └── package.json        # Project configuration and dependencies
 ```
 
-## 🚀 Running Locally
-
-To run the portfolio locally, follow these steps:
-
-1. **Clone this repository:**
-   ```bash
-   git clone https://github.com/AnushkaIsuranga/AnushkaIsuranga.github.io.git
-   ```
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-3. **Run the development server:**
-   ```bash
-   npm run dev
-   ```
-
-   The site will be live at `http://localhost:3000`.
-
 ## 🔗 Connect With Me
 
 - [Portfolio](https://anushkaisuranga.github.io)
