@@ -41,6 +41,21 @@ jobs:
       - name: Build site
         run: npm run build
 
+      - name: Replace placeholders in built HTML
+        run: node -e "
+          const fs = require('fs');
+          const portfolio = require('./src/content/portfolio.json');
+          
+          const htmlPath = './dist/index.html';
+          let html = fs.readFileSync(htmlPath, 'utf8');
+          
+          html = html.replaceAll('%SITE_NAME%', portfolio.site.name);
+          html = html.replaceAll('%SITE_ROLE%', portfolio.site.role);
+          html = html.replaceAll('%SITE_TITLE%', \`\${portfolio.site.name} | \${portfolio.site.role}\`);
+          
+          fs.writeFileSync(htmlPath, html, 'utf8');
+          console.log('✓ Placeholders replaced successfully');
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
