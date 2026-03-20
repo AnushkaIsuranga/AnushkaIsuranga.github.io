@@ -24,9 +24,9 @@ export default function Reveal({
     <motion.div
       className={className}
       initial={
-        reduceMotion ? { opacity: 0 } : { opacity: 0, y: axis.y, x: axis.x, filter: 'blur(10px)' }
+        reduceMotion ? { opacity: 0 } : { opacity: 0, y: axis.y, x: axis.x }
       }
-      whileInView={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, x: 0, filter: 'blur(0px)' }}
+      whileInView={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, x: 0 }}
       viewport={{ once, amount }}
       transition={{
         duration,

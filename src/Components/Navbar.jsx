@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 import { FiMoon, FiSun } from 'react-icons/fi'
 import { AnimatePresence, motion } from 'motion/react'
 import favicon from '../assets/favicon.png'
@@ -21,6 +22,11 @@ function ThemeToggleButton({ onToggleTheme, theme }) {
       <Icon className="text-base" />
     </button>
   )
+}
+
+ThemeToggleButton.propTypes = {
+  onToggleTheme: PropTypes.func.isRequired,
+  theme: PropTypes.oneOf(['dark', 'light']).isRequired,
 }
 
 export default function Navbar({ onToggleTheme, theme }) {
@@ -73,6 +79,25 @@ export default function Navbar({ onToggleTheme, theme }) {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  useEffect(() => {
+    if (typeof document === 'undefined') {
+      return undefined
+    }
+
+    const previousOverflow = document.body.style.overflow
+    const previousTouchAction = document.body.style.touchAction
+
+    if (isMobileOpen) {
+      document.body.style.overflow = 'hidden'
+      document.body.style.touchAction = 'none'
+    }
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.body.style.touchAction = previousTouchAction
+    }
+  }, [isMobileOpen])
+
   const scrollToSection = (sectionId) => {
     document.getElementById(sectionId)?.scrollIntoView({
       behavior: 'smooth',
@@ -83,9 +108,18 @@ export default function Navbar({ onToggleTheme, theme }) {
 
   return (
     <div className="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8">
+      {isMobileOpen ? (
+        <button
+          type="button"
+          aria-label="Close mobile navigation"
+          className="pointer-events-auto fixed inset-0 z-40 bg-slate-950/35 backdrop-blur-md md:hidden"
+          onClick={() => setIsMobileOpen(false)}
+        />
+      ) : null}
+
       <motion.nav
-        className="nav-shell pointer-events-auto mx-auto flex w-full max-w-[1240px] items-center justify-between gap-3 rounded-[1.6rem] pl-3 pr-3 py-3"
-          animate={{
+        className="nav-shell pointer-events-auto relative z-50 mx-auto flex w-full max-w-[1240px] items-center justify-between gap-3 rounded-[1.6rem] pl-3 pr-3 py-3"
+        animate={{
           paddingTop: isCompact ? '0.6rem' : '0.8rem',
           paddingBottom: isCompact ? '0.6rem' : '0.8rem',
           maxWidth: isCompact ? '1180px' : '1240px',
@@ -181,7 +215,7 @@ export default function Navbar({ onToggleTheme, theme }) {
         {isMobileOpen ? (
           <motion.div
             id="mobile-nav-panel"
-            className="nav-shell pointer-events-auto mx-auto mt-2 w-full max-w-[1240px] rounded-[1.35rem] p-2 md:hidden"
+            className="nav-shell pointer-events-auto relative z-50 mx-auto mt-2 w-full max-w-[1240px] rounded-[1.35rem] p-2 md:hidden"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
@@ -208,13 +242,15 @@ export default function Navbar({ onToggleTheme, theme }) {
                   </button>
                 )
               })}
-              <div className="mb-1 flex items-center justify-end rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
-                <ThemeToggleButton theme={theme} onToggleTheme={onToggleTheme} />
-              </div>
             </div>
           </motion.div>
         ) : null}
       </AnimatePresence>
     </div>
   )
+}
+
+Navbar.propTypes = {
+  onToggleTheme: PropTypes.func.isRequired,
+  theme: PropTypes.oneOf(['dark', 'light']).isRequired,
 }

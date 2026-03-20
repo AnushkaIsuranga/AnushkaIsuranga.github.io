@@ -76,7 +76,7 @@ export function useProgressLoader(options = {}) {
       {
         label: 'Loading media',
         progress: 90,
-        run: () => withTimeout(Promise.allSettled(assetUrls.map(preloadImage)), maxTaskMs),
+        run: () => Promise.allSettled(assetUrls.map(preloadImage)),
       },
     ]
 

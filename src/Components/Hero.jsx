@@ -123,6 +123,8 @@ export default function Hero() {
                       src={portrait}
                       alt={`Portrait of ${siteContent.site.name}`}
                       className="h-[22rem] w-full object-cover sm:h-[28rem]"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </MobileParallax>
 

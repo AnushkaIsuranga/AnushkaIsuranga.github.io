@@ -1,18 +1,86 @@
-import { useEffect, useState } from 'react'
-import About from './Components/About'
-import Certifications from './Components/Certifications'
-import Contact from './Components/Contact'
+import { useEffect, useRef, useState } from 'react'
+import PropTypes from 'prop-types'
 import CustomCursor from './Components/CustomCursor'
-import Experience from './Components/Experience'
 import Hero from './Components/Hero'
 import Navbar from './Components/Navbar'
-import Projects from './Components/Projects'
-import TechStack from './Components/TechStack'
 import portrait from './assets/my_pic.webp'
+import { projectsData } from './content'
 import { useProgressLoader } from './hooks/useProgressLoader'
 import { THEME_STORAGE_KEY, resolveInitialTheme } from './theme'
 
-const criticalAssets = [portrait]
+const criticalAssets = [portrait, ...projectsData.map((project) => project.image).filter(Boolean)]
+
+const deferredSections = [
+  { id: 'about', loader: () => import('./Components/About'), fallbackClassName: 'min-h-[34rem]' },
+  { id: 'stack', loader: () => import('./Components/TechStack'), fallbackClassName: 'min-h-[38rem]' },
+  { id: 'experience', loader: () => import('./Components/Experience'), fallbackClassName: 'min-h-[42rem]' },
+  { id: 'certifications', loader: () => import('./Components/Certifications'), fallbackClassName: 'min-h-[34rem]' },
+  { id: 'projects', loader: () => import('./Components/Projects'), fallbackClassName: 'min-h-[52rem]' },
+  { id: 'contact', loader: () => import('./Components/Contact'), fallbackClassName: 'min-h-[32rem]' },
+]
+
+function DeferredSection({ loader, fallbackClassName }) {
+  const [isReady, setIsReady] = useState(false)
+  const [SectionComponent, setSectionComponent] = useState(null)
+  const sentinelRef = useRef(null)
+
+  useEffect(() => {
+    if (isReady) {
+      return undefined
+    }
+
+    const node = sentinelRef.current
+    if (!node) {
+      return undefined
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsReady(true)
+          observer.disconnect()
+        }
+      },
+      {
+        rootMargin: '600px 0px',
+        threshold: 0.01,
+      }
+    )
+
+    observer.observe(node)
+
+    return () => observer.disconnect()
+  }, [isReady])
+
+  useEffect(() => {
+    if (!isReady || SectionComponent) {
+      return undefined
+    }
+
+    let cancelled = false
+
+    loader().then((module) => {
+      if (!cancelled) {
+        setSectionComponent(() => module.default)
+      }
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [SectionComponent, isReady, loader])
+
+  if (!SectionComponent) {
+    return <div ref={sentinelRef} className={fallbackClassName} aria-hidden="true" />
+  }
+
+  return <SectionComponent />
+}
+
+DeferredSection.propTypes = {
+  fallbackClassName: PropTypes.string.isRequired,
+  loader: PropTypes.func.isRequired,
+}
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -98,12 +166,13 @@ function App() {
 
       <main id="content" className="page-main">
         <Hero />
-        <About />
-        <TechStack />
-        <Experience />
-        <Certifications />
-        <Projects />
-        <Contact />
+        {deferredSections.map((section) => (
+          <DeferredSection
+            key={section.id}
+            loader={section.loader}
+            fallbackClassName={`section-shell ${section.fallbackClassName}`}
+          />
+        ))}
       </main>
     </div>
   )

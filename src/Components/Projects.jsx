@@ -46,6 +46,8 @@ function ProjectCaseStudy({ project, index }) {
                 src={project.image}
                 alt={project.title}
                 className="h-full w-full object-cover"
+                loading="lazy"
+                decoding="async"
               />
             </MobileParallax>
 
@@ -159,6 +161,8 @@ function ProjectCaseStudy({ project, index }) {
                 src={project.image}
                 alt={project.title}
                 className="h-[18rem] w-full object-cover sm:h-[22rem] xl:h-full"
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-br from-sky-500/28 via-indigo-500/14 to-violet-500/28 mix-blend-screen" />
               <div className="project-image-overlay absolute inset-0" />

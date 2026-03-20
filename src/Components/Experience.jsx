@@ -10,160 +10,144 @@ import {
   latestEducation,
   siteContent,
 } from '../content'
-
+ 
 const experienceTypes = ['Work', 'Education', 'Leadership']
 
 function ShootingStarLine({ timelineRef }) {
   const canvasRef = useRef(null)
-  const orbRef = useRef(null)
   const particlesRef = useRef([])
   const rafRef = useRef(null)
-  const prevProgressRef = useRef(0)
-  const lineXRef = useRef(8) // pixel x of the line inside the container
+  const prevYRef = useRef(0)
   const [lineHeight, setLineHeight] = useState(0)
-
+ 
   const { scrollYProgress } = useScroll({
     target: timelineRef,
-    offset: ['start 90%', 'end 10%'],
+    offset: ['start center', 'end center'],
   })
-
+ 
+  // Snappier spring than before — less lag, still feels alive
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 70,
-    damping: 18,
-    restDelta: 0.0005,
+    stiffness: 120,
+    damping: 26,
+    restDelta: 0.001,
   })
-
+ 
+  // Orb y = progress × full height of the container
   const orbTop = useTransform(smoothProgress, [0, 1], [0, lineHeight])
-
+ 
+  // Keep canvas size in sync
   useEffect(() => {
     const container = timelineRef.current
     const canvas = canvasRef.current
     if (!container || !canvas) return
-
+ 
     const sync = () => {
-      const w = container.offsetWidth
-      const h = container.offsetHeight
-      canvas.width = w
-      canvas.height = h
-      setLineHeight(h)
-
-      lineXRef.current = window.innerWidth >= 640 ? 8 : 7
+      canvas.width = container.offsetWidth
+      canvas.height = container.offsetHeight
+      setLineHeight(container.offsetHeight)
     }
-
+ 
     sync()
     const ro = new ResizeObserver(sync)
     ro.observe(container)
     return () => ro.disconnect()
   }, [timelineRef])
-
+ 
+  // Spawn particles only when the orb actually moves (≥3px delta)
   useEffect(() => {
-    const unsubscribe = smoothProgress.on('change', (progress) => {
+    const unsub = smoothProgress.on('change', (progress) => {
       const canvas = canvasRef.current
       if (!canvas || canvas.height === 0) return
-
+ 
       const currentY = progress * canvas.height
-      const prevY = prevProgressRef.current * canvas.height
-      const dy = currentY - prevY
-      prevProgressRef.current = progress
-
-      if (Math.abs(dy) < 2) return
-
-      const spawnX = lineXRef.current
-      const steps = Math.min(Math.ceil(Math.abs(dy) / 4), 5)
-
-      for (let i = 0; i < steps; i++) {
-        const t = i / steps
-        const spawnY = currentY - dy * (1 - t) * 0.6
-
+      const dy = currentY - prevYRef.current
+      prevYRef.current = currentY
+ 
+      if (Math.abs(dy) < 3) return
+ 
+      const lineX = window.innerWidth >= 640 ? 8 : 7
+      // Max 3 particles per tick — much lighter than before
+      const count = Math.min(Math.ceil(Math.abs(dy) / 8), 3)
+ 
+      for (let i = 0; i < count; i++) {
         particlesRef.current.push({
-          x: spawnX + (Math.random() - 0.5) * 5,
-          y: spawnY,
-          vx: (Math.random() - 0.5) * 1.2,
-          vy: (Math.random() - 0.5) * 0.8 - dy * 0.04,
-          life: 0.85 + Math.random() * 0.15,
-          decay: 0.022 + Math.random() * 0.014,
-          radius: Math.random() * 2.2 + 0.8,
-          hue: 200 + Math.random() * 45,
-          sat: 70 + Math.random() * 25,
-          lit: 72 + Math.random() * 22,
+          x: lineX + (Math.random() - 0.5) * 3,
+          // Spread behind the orb along the travel direction
+          y: currentY - dy * (i / count) * 0.45,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.35,
+          life: 0.55 + Math.random() * 0.2,
+          decay: 0.038 + Math.random() * 0.014,
+          radius: Math.random() * 1.4 + 0.5,
+          hue: 210 + Math.random() * 30,
         })
       }
     })
-    return unsubscribe
+    return unsub
   }, [smoothProgress])
-
+ 
+  // RAF draw loop — plain filled circles only (no radial gradient per particle)
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
-
+ 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      particlesRef.current = particlesRef.current.filter((p) => p.life > 0.02)
-
+      particlesRef.current = particlesRef.current.filter((p) => p.life > 0.01)
+ 
       for (const p of particlesRef.current) {
         p.x += p.vx
         p.y += p.vy
         p.life -= p.decay
-        p.vx *= 0.96 // gentle air-drag
-        p.vy *= 0.96
-
-        const alpha = Math.max(0, p.life)
-
-        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 2.5)
-        grd.addColorStop(0, `hsla(${p.hue}, ${p.sat}%, ${p.lit}%, ${alpha * 0.9})`)
-        grd.addColorStop(1, `hsla(${p.hue}, ${p.sat}%, ${p.lit}%, 0)`)
+        p.vx *= 0.93
+        p.vy *= 0.93
+ 
         ctx.beginPath()
-        ctx.arc(p.x, p.y, p.radius * 2.5, 0, Math.PI * 2)
-        ctx.fillStyle = grd
-        ctx.fill()
-
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.radius * 0.7, 0, Math.PI * 2)
-        ctx.fillStyle = `hsla(${p.hue}, ${p.sat}%, 95%, ${alpha})`
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
+        ctx.fillStyle = `hsla(${p.hue}, 75%, 80%, ${Math.max(0, p.life)})`
         ctx.fill()
       }
-
+ 
       rafRef.current = requestAnimationFrame(draw)
     }
-
+ 
     draw()
     return () => cancelAnimationFrame(rafRef.current)
   }, [])
-
-  const lineX = 'left-[0.45rem] sm:left-2'
-
+ 
+  const linePos = 'left-[0.45rem] sm:left-2'
+ 
   return (
     <>
-      
+      {/* 1. Dim full-height track */}
       <div
-        className={`absolute ${lineX} top-0 h-full w-px bg-white/[0.07]`}
+        className={`absolute ${linePos} top-0 h-full w-px bg-white/[0.08]`}
         aria-hidden="true"
       />
-
-      
+ 
+      {/* 2. Scroll-driven fill — grows from top as user scrolls */}
       <motion.div
-        className={`absolute ${lineX} top-0 w-px origin-top`}
+        className={`absolute ${linePos} top-0 w-px origin-top`}
         style={{
           scaleY: smoothProgress,
           height: '100%',
-          background:
-            'linear-gradient(to bottom, rgba(125,211,252,0.9) 0%, rgba(129,140,248,0.85) 55%, rgba(167,139,250,0.7) 100%)',
+          background: 'linear-gradient(to bottom, #7dd3fc 0%, #818cf8 55%, #a78bfa 100%)',
+          opacity: 0.9,
         }}
         aria-hidden="true"
       />
-
-      
+ 
+      {/* 3. Canvas — particle trail floats over the section */}
       <canvas
         ref={canvasRef}
         className="pointer-events-none absolute left-0 top-0"
         aria-hidden="true"
       />
-
-      
+ 
+      {/* 4. Orb — lives at the exact bottom tip of the fill.
+              One pulse ring + one small bright core. That's it. */}
       <motion.div
-        ref={orbRef}
         className="pointer-events-none absolute"
         style={{
           left: 'calc(0.45rem)',
@@ -173,65 +157,47 @@ function ShootingStarLine({ timelineRef }) {
         }}
         aria-hidden="true"
       >
-        
+        {/* Single pulse ring — gentle, not aggressive */}
         <motion.div
           className="absolute rounded-full"
           style={{
-            width: 26,
-            height: 26,
+            width: 16,
+            height: 16,
             top: '50%',
             left: '50%',
             x: '-50%',
             y: '-50%',
-            background: 'rgba(125,211,252,0.12)',
-            boxShadow: '0 0 18px 6px rgba(125,211,252,0.25)',
           }}
-          animate={{ scale: [1, 2.2, 1], opacity: [0.7, 0, 0.7] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-        />
-
-        
-        <motion.div
-          className="absolute rounded-full"
-          style={{
-            width: 14,
-            height: 14,
-            top: '50%',
-            left: '50%',
-            x: '-50%',
-            y: '-50%',
-            background: 'rgba(165,180,252,0.25)',
-            boxShadow: '0 0 10px 3px rgba(129,140,248,0.45)',
-          }}
-          animate={{ scale: [1, 1.6, 1], opacity: [0.9, 0.3, 0.9] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 0.7 }}
-        />
-
-        
+          animate={{ scale: [1, 2.4, 1], opacity: [0.5, 0, 0.5] }}
+          transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <div className="h-full w-full rounded-full bg-sky-300/20" />
+        </motion.div>
+ 
+        {/* Core dot */}
         <div
           style={{
-            width: 7,
-            height: 7,
+            width: 6,
+            height: 6,
             borderRadius: '50%',
-            background:
-              'radial-gradient(circle at 35% 35%, #ffffff, #93c5fd)',
-            boxShadow:
-              '0 0 8px 3px rgba(125,211,252,0.9), 0 0 2px 1px rgba(255,255,255,0.95)',
+            background: '#f0f9ff',
+            boxShadow: '0 0 5px 2px rgba(125,211,252,0.75)',
           }}
         />
       </motion.div>
     </>
   )
 }
-
+ 
+// ─── Main Experience component ───────────────────────────────────────────────
 export default function Experience() {
   const timelineRef = useRef(null)
-
+ 
   const summaryCards = experienceTypes.map((type) => ({
     label: type,
     value: String(experienceCounts[type] ?? 0),
   }))
-
+ 
   const overviewPanels = [
     {
       label: siteContent.experienceSection.overviewLabels.currentRole,
@@ -249,7 +215,7 @@ export default function Experience() {
       detail: currentLeadership?.title ?? 'Community contribution',
     },
   ]
-
+ 
   return (
     <section
       id="experience"
@@ -257,12 +223,12 @@ export default function Experience() {
       aria-labelledby="experience-title"
     >
       <div className="section-inner">
-        
+        {/* Header */}
         <div className="section-header max-w-3xl">
           <Reveal>
             <span className="section-label">Experience</span>
           </Reveal>
-
+ 
           <Reveal delay={0.05}>
             <h2
               id="experience-title"
@@ -271,13 +237,13 @@ export default function Experience() {
               {siteContent.experienceSection.title}
             </h2>
           </Reveal>
-
+ 
           <Reveal delay={0.1}>
             <p className="section-copy max-w-2xl">{siteContent.experienceSection.copy}</p>
           </Reveal>
         </div>
-
-        
+ 
+        {/* Overview panels */}
         <Reveal delay={0.14} className="mt-8">
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
             {overviewPanels.map((panel) => (
@@ -289,10 +255,10 @@ export default function Experience() {
             ))}
           </div>
         </Reveal>
-
-        
+ 
+        {/* Summary stat cards */}
         <Reveal delay={0.18} className="mt-4">
-          <div className="grid gap-4 grid-cols-3">
+          <div className="grid grid-cols-3 gap-4">
             {summaryCards.map((item) => (
               <div key={item.label} className="stat-card">
                 <p className="metric-value text-white">{item.value}</p>
@@ -301,15 +267,11 @@ export default function Experience() {
             ))}
           </div>
         </Reveal>
-
-        
-        
-        <div
-          ref={timelineRef}
-          className="relative mt-10 pl-4 sm:pl-6"
-        >
+ 
+        {/* Timeline */}
+        <div ref={timelineRef} className="relative mt-10 pl-4 sm:pl-6">
           <ShootingStarLine timelineRef={timelineRef} />
-
+ 
           <div className="space-y-5">
             {experiencesData.map((experience, index) => (
               <Reveal
@@ -321,15 +283,13 @@ export default function Experience() {
                   <span className="timeline-marker absolute left-[-0.05rem] top-7 flex h-4 w-4 items-center justify-center rounded-full sm:left-[0.1rem]">
                     <span className="h-2 w-2 rounded-full bg-indigo-300" />
                   </span>
-
+ 
                   <div className="grid gap-4 lg:grid-cols-[170px_minmax(0,1fr)] lg:items-start">
-                    
                     <div className="space-y-3 lg:pt-5">
                       <p className="metric-label text-white/55">{experience.period}</p>
                       <span className="eyebrow-chip">{experience.type}</span>
                     </div>
-
-                    
+ 
                     <MobileParallax offset={20}>
                       <motion.div
                         className="editorial-card w-full overflow-hidden rounded-[1.85rem] p-5 sm:p-7"
@@ -345,7 +305,7 @@ export default function Experience() {
                               {experience.title}
                             </p>
                           </div>
-
+ 
                           <div className="surface-muted rounded-[1.25rem] px-4 py-4">
                             <p className="metric-label text-white/50">Primary focus</p>
                             <p className="mt-3 text-sm font-medium leading-7 text-white">
@@ -353,11 +313,11 @@ export default function Experience() {
                             </p>
                           </div>
                         </div>
-
+ 
                         <p className="mt-5 text-sm leading-7 text-slate-400 sm:text-base">
                           {experience.summary}
                         </p>
-
+ 
                         <div className="mt-6 flex flex-wrap gap-2">
                           {experience.focus.map((item) => (
                             <span key={item} className="skill-pill text-xs">

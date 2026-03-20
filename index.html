@@ -2,6 +2,10 @@
 <html class="scroll-smooth cursor-default" lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- Preconnect to optimize font loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://www.google-analytics.com" />
     <!-- Favicon Declaration -->
     <link rel="icon" type="image/png" href="https://anushkaisuranga.github.io/favicon.png" />
     <link rel="apple-touch-icon" href="https://anushkaisuranga.github.io/favicon.png" />
@@ -315,21 +319,28 @@
       }
     </script>
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0FJH61PY0G"></script>
     <script>
-      window.dataLayer = window.dataLayer || []
-      function gtag() {
-        dataLayer.push(arguments)
+      if (window.location.hostname === 'anushkaisuranga.github.io') {
+        const script = document.createElement('script')
+        script.async = true
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-0FJH61PY0G'
+        document.head.appendChild(script)
+
+        window.dataLayer = window.dataLayer || []
+        window.gtag = function gtag() {
+          window.dataLayer.push(arguments)
+        }
+
+        window.gtag('js', new Date())
+        window.gtag('config', 'G-0FJH61PY0G')
       }
-      gtag('js', new Date())
-      gtag('config', 'G-0FJH61PY0G')
     </script>
   </head>
   <body>
     <div id="boot-preloader" aria-hidden="true">
       <div class="boot-top">
         <div class="boot-brand">
-          <img src="/favicon.png" alt="" />
+          <img src="/favicon.png" alt="" width="34" height="34" />
           <div>
             <div class="boot-name">%VITE_SITE_NAME%</div>
             <div class="boot-role">%VITE_SITE_ROLE%</div>
