@@ -2,8 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -20,21 +19,20 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
 
-      - name: Set up Pages
+      - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Install dependencies
@@ -43,27 +41,31 @@ jobs:
       - name: Build site
         run: npm run build
 
-      - name: Replace placeholders in built HTML
-        run: node -e "
+      - name: Replace placeholders
+        run: |
+          node <<'EOF'
           const fs = require('fs');
-          const portfolio = require('./src/content/portfolio.json');
-          
+
+          const portfolio = JSON.parse(
+            fs.readFileSync('./src/content/portfolio.json','utf8')
+          );
+
           const htmlPath = './dist/index.html';
           let html = fs.readFileSync(htmlPath, 'utf8');
-          
+
           html = html.replaceAll('%SITE_NAME%', portfolio.site.name);
           html = html.replaceAll('%SITE_ROLE%', portfolio.site.role);
-          html = html.replaceAll('%SITE_TITLE%', \`\${portfolio.site.name} | \${portfolio.site.role}\`);
-          
-          fs.writeFileSync(htmlPath, html, 'utf8');
-          console.log('✓ Placeholders replaced successfully');
-        
+          html = html.replaceAll('%SITE_TITLE%', `${portfolio.site.name} | ${portfolio.site.role}`);
 
-      - name: Upload Pages artifact
+          fs.writeFileSync(htmlPath, html);
+          console.log('✓ Placeholders replaced successfully');
+          EOF
+
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: ./dist
 
-      - name: Deploy Pages site
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
