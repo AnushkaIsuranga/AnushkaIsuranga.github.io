@@ -15,16 +15,19 @@ const htmlReplacements = {
 
 export default defineConfig({
   plugins: [
-    react(),
     {
       name: 'portfolio-html-content',
-      transformIndexHtml(html) {
-        return Object.entries(htmlReplacements).reduce(
-          (output, [token, value]) => output.replaceAll(token, value),
-          html
-        )
+      transformIndexHtml: {
+        order: 'pre',
+        handler(html) {
+          return Object.entries(htmlReplacements).reduce(
+            (output, [token, value]) => output.replaceAll(token, value),
+            html
+          )
+        },
       },
     },
+    react(),
   ],
   resolve: {
     alias: {
