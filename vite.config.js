@@ -1,34 +1,9 @@
-import { readFileSync } from 'node:fs'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-const portfolio = JSON.parse(
-  readFileSync(new URL('./src/content/portfolio.json', import.meta.url), 'utf8')
-)
-
-const htmlReplacements = {
-  '%SITE_NAME%': portfolio.site.name,
-  '%SITE_ROLE%': portfolio.site.role,
-  '%SITE_TITLE%': `${portfolio.site.name} | ${portfolio.site.role}`,
-}
-
 export default defineConfig({
-  plugins: [
-    {
-      name: 'portfolio-html-content',
-      transformIndexHtml: {
-        order: 'pre',
-        handler(html) {
-          return Object.entries(htmlReplacements).reduce(
-            (output, [token, value]) => output.replaceAll(token, value),
-            html
-          )
-        },
-      },
-    },
-    react(),
-  ],
+  plugins: [react()],
   resolve: {
     alias: {
       'react-icons/si': fileURLToPath(
