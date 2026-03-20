@@ -57,7 +57,7 @@ jobs:
           
           fs.writeFileSync(htmlPath, html, 'utf8');
           console.log('✓ Placeholders replaced successfully');
-        "
+        
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
