@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 import CustomCursor from './Components/CustomCursor'
 import Hero from './Components/Hero'
 import Navbar from './Components/Navbar'
+import OrientationOverlay from './Components/OrientationOverlay'
 import portrait from './assets/my_pic.webp'
 import { projectsData } from './content'
 import { useProgressLoader } from './hooks/useProgressLoader'
+import { useOrientationDetector } from './hooks/useOrientationDetector'
 import { THEME_STORAGE_KEY, resolveInitialTheme } from './theme'
 
 const criticalAssets = [portrait, ...projectsData.map((project) => project.image).filter(Boolean)]
@@ -88,6 +90,7 @@ function App() {
   const { complete } = useProgressLoader({
     assetUrls: criticalAssets,
   })
+  const { shouldShowOverlay } = useOrientationDetector()
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -158,6 +161,8 @@ function App() {
       <div className="ambient-grid" aria-hidden="true" />
       <div className="ambient-orb ambient-orb-one" aria-hidden="true" />
       <div className="ambient-orb ambient-orb-two" aria-hidden="true" />
+
+      <OrientationOverlay isVisible={shouldShowOverlay} />
 
       <Navbar
         theme={theme}
