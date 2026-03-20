@@ -481,7 +481,7 @@
       "title": "Bitzify",
       "role": "Intern Full-Stack Software Developer",
       "summary": "Developing production full-stack applications using modern web technologies. Designed backend systems for inventory and POS platforms, refactored frontend architecture, and contributed to payment system integration.",
-      "focus": ["ASP.NET backend", "Frontend architecture", "System design"]
+      "focus": ["Production development", "Frontend architecture", "System design"]
     },
     {
       "period": "Jul 2025 - Present",
@@ -520,8 +520,8 @@
       "type": "Leadership",
       "title": "St. Sylvester's College",
       "role": "Committee Member, IT Society",
-      "summary": "Supported event planning, speaker sessions, and ICT community building through hands-on coordination.",
-      "focus": ["Event planning", "Speaker sessions", "ICT support"]
+      "summary": "Supported event planning, competition organizing, and ICT community building through hands-on coordination.",
+      "focus": ["Event planning", "Competitions", "ICT support"]
     },
     {
       "period": "May 2022 - Aug 2022",
@@ -529,7 +529,7 @@
       "title": "National Institute of Business Management",
       "role": "Certificate in Software Engineering",
       "summary": "Strengthened core programming, algorithms, and systems fundamentals through project-based learning.",
-      "focus": ["Algorithms", "Software fundamentals", "Projects"]
+      "focus": ["SE foundation", "Best practices", "Projects"]
     },
     {
       "period": "Feb 2017 - Jun 2018",
@@ -537,7 +537,7 @@
       "title": "ESOFT Metro Campus, Matale",
       "role": "DiTEC Diploma in Information Technology",
       "summary": "Built an early foundation in ICT, productivity tools, hardware concepts, networking basics, and introductory programming.",
-      "focus": ["ICT foundation", "Networking basics", "Intro programming"]
+      "focus": ["ICT foundation", "Software fundamentals", "Intro programming"]
     }
   ]
 }
