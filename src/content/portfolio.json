@@ -297,7 +297,7 @@
       }
     ],
     "emailjs": {
-      "serviceId": "service_q0gnjbi",
+      "serviceId": "default_service",
       "templateId": "template_cyhg4at",
       "userId": "nDNf3GocCkCuyD2ii"
     },
