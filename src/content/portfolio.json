@@ -1,0 +1,543 @@
+{
+  "site": {
+    "name": "Anushka Isuranga",
+    "role": "Full-Stack Software Engineer",
+    "location": "Matale, Sri Lanka",
+    "locationLabel": "Full-stack engineer building scalable web systems",
+    "footerLocation": "Matale / Sri Lanka",
+    "availability": "Open to full-time roles, and technical collaborations",
+    "resumeUrl": "https://drive.google.com/file/d/1YLrJRjw-5h3Ytc1cRK1eyC3AzJbvg8Df/view?usp=sharing",
+    "coreLanes": ["web", "backend", "mobile"]
+  },
+  "navigation": [
+    { "id": "hero", "label": "Home" },
+    { "id": "about", "label": "About" },
+    { "id": "stack", "label": "Stack" },
+    { "id": "experience", "label": "Experience" },
+    { "id": "certifications", "label": "Certifications" },
+    { "id": "projects", "label": "Projects" },
+    { "id": "contact", "label": "Contact" }
+  ],
+  "socialLinks": [
+    {
+      "id": "github",
+      "label": "GitHub",
+      "href": "https://github.com/AnushkaIsuranga",
+      "iconKey": "github"
+    },
+    {
+      "id": "linkedin",
+      "label": "LinkedIn",
+      "href": "https://www.linkedin.com/in/anushka-isuranga/",
+      "iconKey": "linkedin"
+    },
+    {
+      "id": "medium",
+      "label": "Medium",
+      "href": "https://medium.com/@isuranga880",
+      "iconKey": "medium"
+    },
+    {
+      "id": "instagram",
+      "label": "Instagram",
+      "href": "https://www.instagram.com/aka_andy_780/",
+      "iconKey": "instagram"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp",
+      "href": "https://wa.me/+94771732201",
+      "iconKey": "whatsapp"
+    }
+  ],
+  "hero": {
+    "kicker": "Building full-stack products with cleaner structure and stronger frontend craft",
+    "headline": "Anushka Isuranga",
+    "intro": "I build software that feels professional in both code and presentation: clear interfaces, dependable flows, and product decisions that make sense to the people using them.",
+    "ctaButtons": [
+      {
+        "label": "View selected work",
+        "href": "#projects",
+        "variant": "primary",
+        "iconKey": "arrowDownRight"
+      },
+      {
+        "label": "Start a conversation",
+        "href": "#contact",
+        "variant": "secondary",
+        "iconKey": "mail"
+      },
+      {
+        "label": "Download CV",
+        "href": "https://drive.google.com/file/d/1YLrJRjw-5h3Ytc1cRK1eyC3AzJbvg8Df/view?usp=sharing",
+        "variant": "secondary",
+        "iconKey": "download",
+        "external": true
+      }
+    ],
+    "heroSocialLinkIds": ["linkedin", "github", "medium"],
+    "quickFacts": [
+      {
+        "label": "Current role",
+        "value": "Software Engineer Intern",
+        "detail": "Shipping production-facing features at Bitzify."
+      },
+      {
+        "label": "Core stack",
+        "value": "Spring Boot, ASP.NET, Python",
+        "detail": "Backend systems with AI/ML applications."
+      },
+      {
+        "label": "Location",
+        "value": "Matale, Sri Lanka",
+        "detail": "Open to SE roles & freelance work."
+      }
+    ],
+    "focusAreas": [
+      {
+        "title": "Frontend structure",
+        "text": "Readable UI systems, cleaner spacing, and components that scale without feeling heavy."
+      },
+      {
+        "title": "Product delivery",
+        "text": "Interfaces shaped around the actual workflow instead of just visual decoration."
+      },
+      {
+        "title": "Scalable Backend Systems",
+        "text": "Building REST APIs with Spring Boot and ASP.NET, managing databases, and designing systems that grow without technical debt."
+      }
+    ],
+    "bestFitLabel": "Best fit",
+    "bestFitText": "Teams that want a portfolio-style frontend mindset backed by practical delivery, review discipline, and clear communication.",
+    "proofLabels": {
+      "caseStudies": "featured case studies",
+      "liveDemos": "live demos available",
+      "coreLanesPrefix": "core lanes across",
+      "workStart": "entered production-facing engineering work"
+    }
+  },
+  "about": {
+    "title": "Full-Stack Systems and AI-Driven Solutions.",
+    "copy": "Computer Science student with AI specialization focused on building full-stack applications and intelligent systems. I design scalable backend services, cloud-deployed platforms, and data-driven solutions. My work combines software engineering discipline with machine learning applications—from REST APIs and database architecture to predictive models and IoT systems. Currently contributing to production systems at Bitzify.",
+    "principles": [
+      {
+        "title": "Scalable Backend Systems",
+        "text": "Building robust REST APIs with Spring Boot and ASP.NET, designing databases that grow with the business, and implementing cloud-native architectures.",
+        "iconKey": "building"
+      },
+      {
+        "title": "AI & Machine Learning",
+        "text": "Integrating predictive models, data analysis, and intelligent decision-making into full-stack applications. Experience with Python, scikit-learn, and real-world ML deployment.",
+        "iconKey": "brain"
+      },
+      {
+        "title": "Production-Ready Code",
+        "text": "Writing maintainable systems with proper testing, documentation, and CI/CD pipelines. Focus on engineering discipline and long-term maintainability.",
+        "iconKey": "gears"
+      }
+    ],
+    "highlightLabels": {
+      "projects": "featured builds across healthcare, operations, media, and IoT",
+      "coreLanesPrefix": "main lanes:",
+      "workStart": "entered production-facing engineering work"
+    },
+    "capabilities": [
+      "Building scalable REST APIs and backend services with Spring Boot, ASP.NET, and Node.js.",
+      "Designing database systems and data pipelines for production applications.",
+      "Developing machine learning models and integrating AI into full-stack systems.",
+      "Deploying cloud-based applications on AWS and Azure with containerization and CI/CD automation.",
+      "Creating full-stack applications that combine sophisticated backend logic with clean frontend architecture."
+    ],
+    "priorities": [
+      "Building systems that are easy to maintain, scale, and extend with new ML features.",
+      "Writing well-documented APIs and data pipelines that other engineers can easily integrate with.",
+      "Deploying intelligent systems that combine backend reliability with predictive capabilities."
+    ],
+    "workingStyle": {
+      "label": "Working style",
+      "text": "I like work that is grounded in actual delivery: role-aware systems, sensible data flows, and interfaces that help reviewers understand the project quickly instead of fighting the layout."
+    },
+    "stackNote": {
+      "label": "Stack note",
+      "text": "The toolset lives in its own section so it reads more like a system view than a handful of loose tags."
+    }
+  },
+  "stack": {
+    "title": "The tools I keep closest to the work.",
+    "copy": "Built like a dedicated section instead of loose badges: the core technologies, delivery tools, and product workflow essentials I return to most often.",
+    "sections": [
+      {
+        "category": "Frontend",
+        "description": "UI frameworks, styling, and browser-focused tooling",
+        "items": [
+          { "label": "React", "iconKey": "react" },
+          { "label": "Next.js", "iconKey": "nextjs" },
+          { "label": "TypeScript", "iconKey": "typescript" },
+          { "label": "JavaScript", "iconKey": "javascript" },
+          { "label": "HTML", "iconKey": "html" },
+          { "label": "CSS", "iconKey": "css" },
+          { "label": "Tailwind", "iconKey": "tailwind" },
+          { "label": "Bootstrap", "iconKey": "bootstrap" },
+          { "label": "MUI", "iconKey": "mui" },
+          { "label": "Vite", "iconKey": "vite" }
+        ]
+      },
+      {
+        "category": "Backend",
+        "description": "Server-side runtime, frameworks, and languages",
+        "items": [
+          { "label": "Java", "iconKey": "java" },
+          { "label": "Spring Boot", "iconKey": "springboot" },
+          { "label": "Node.js", "iconKey": "nodejs" },
+          { "label": "Express.js", "iconKey": "expressjs" },
+          { "label": "Python", "iconKey": "python" },
+          { "label": "ASP.NET", "iconKey": "dotnet" },
+          { "label": "Nest.js", "iconKey": "nestjs" },
+          { "label": "Flask", "iconKey": "flask" },
+          { "label": "FastAPI", "iconKey": "fastapi" },
+          { "label": "PHP", "iconKey": "php" },
+          { "label": "Kotlin", "iconKey": "kotlin" },
+          { "label": "C#", "iconKey": "csharp" },
+          { "label": "C++", "iconKey": "cpp" }
+        ]
+      },
+      {
+        "category": "Mobile",
+        "description": "Cross-platform and native mobile development",
+        "items": [
+          { "label": "React Native", "iconKey": "reactnative" },
+          { "label": "Kotlin", "iconKey": "kotlin" },
+          { "label": "Android Studio", "iconKey": "androidstudio" }
+        ]
+      },
+      {
+        "category": "Databases & Data",
+        "description": "Data persistence, queries, and cloud storage",
+        "items": [
+          { "label": "MySQL", "iconKey": "mysql" },
+          { "label": "PostgreSQL", "iconKey": "postgresql" },
+          { "label": "MongoDB", "iconKey": "mongodb" },
+          { "label": "SQLite", "iconKey": "sqlite" },
+          { "label": "Microsoft SQL Server", "iconKey": "microsoftsqlserver" },
+          { "label": "Firebase", "iconKey": "firebase" }
+        ]
+      },
+      {
+        "category": "Cloud & DevOps",
+        "description": "Infrastructure, containers, and deployment",
+        "items": [
+          { "label": "Microsoft Azure", "iconKey": "azure" },
+          { "label": "AWS", "iconKey": "aws" },
+          { "label": "Docker", "iconKey": "docker" },
+          { "label": "GitHub Actions", "iconKey": "githubActions" },
+          { "label": "Vercel", "iconKey": "vercel" }
+        ]
+      },
+      {
+        "category": "Development Tools",
+        "description": "IDE, version control, testing, and design",
+        "items": [
+          { "label": "VS Code", "iconKey": "vscode" },
+          { "label": "IntelliJ IDEA", "iconKey": "intellijidea" },
+          { "label": "Git", "iconKey": "git" },
+          { "label": "GitHub", "iconKey": "github" },
+          { "label": "Jest", "iconKey": "jest" },
+          { "label": "Vitest", "iconKey": "vitest" },
+          { "label": "ESLint", "iconKey": "eslint" },
+          { "label": "Prettier", "iconKey": "prettier" },
+          { "label": "Figma", "iconKey": "figma" },
+          { "label": "Postman", "iconKey": "postman" },
+          { "label": "Swagger", "iconKey": "swagger" },
+          { "label": "Jupyter Notebook", "iconKey": "jupyter" }
+        ]
+      }
+    ]
+  },
+  "experienceSection": {
+    "title": "A timeline that reads like real progress, not filler.",
+    "copy": "My path combines education, leadership, and hands-on engineering work. The goal here is simple: make each step easy to scan, easy to understand, and clearly tied to what it added to the craft.",
+    "overviewLabels": {
+      "currentRole": "Current role",
+      "academicTrack": "Academic track",
+      "leadership": "Leadership"
+    }
+  },
+  "projectsSection": {
+    "title": "Case studies that explain the work without making you fight the layout.",
+    "copy": "This section is now built to scan cleanly: project context first, delivery choices next, and outcome last. That makes the work easier to review whether the demo is public or the product is still private.",
+    "summaryLabels": {
+      "caseStudies": "Case studies",
+      "liveDemos": "Live demos",
+      "privateBuilds": "Private builds"
+    }
+  },
+  "contact": {
+    "title": "Let us make the next build feel stronger from the start.",
+    "copy": "If you have a product idea, internship opportunity, collaboration, or a portfolio review request, I am happy to talk through it with clear expectations and a focused approach.",
+    "bestFitLabel": "Best fit for",
+    "bestFitText": "Internship roles, focused freelance work, and teams that value both code quality and presentation.",
+    "contactItems": [
+      {
+        "label": "Email",
+        "value": "isuranga880@gmail.com",
+        "href": "mailto:isuranga880@gmail.com",
+        "iconKey": "mail"
+      },
+      {
+        "label": "Phone",
+        "value": "+94 77 173 2201",
+        "href": "https://wa.me/+94771732201",
+        "iconKey": "phone"
+      },
+      {
+        "label": "Location",
+        "value": "Matale, Sri Lanka",
+        "href": "https://www.google.com/maps/place/Matale",
+        "iconKey": "location"
+      }
+    ],
+    "emailjs": {
+      "serviceId": "service_q0gnjbi",
+      "templateId": "template_cyhg4at",
+      "userId": "nDNf3GocCkCuyD2ii"
+    },
+    "form": {
+      "label": "Message form",
+      "title": "Start the conversation",
+      "copy": "Share the goal, the stage you are in, and what kind of help you need.",
+      "fields": {
+        "nameLabel": "Name",
+        "namePlaceholder": "Your full name",
+        "emailLabel": "Email",
+        "emailPlaceholder": "name@email.com",
+        "messageLabel": "Project brief",
+        "messagePlaceholder": "Tell me what you are building, what stage you are in, and how I can help."
+      },
+      "submitLabel": "Send message",
+      "sendingLabel": "Sending message...",
+      "successMessage": "Message sent successfully. I will get back to you soon.",
+      "errorMessage": "Something went wrong while sending your message. Please try again later."
+    }
+  },
+  "certifications": [
+    {
+      "title": "Microsoft Certified: Azure Fundamentals (AZ-900)",
+      "issuer": "Microsoft",
+      "year": "2025",
+      "description": "Cloud fundamentals including Azure services, deployment models, and core cloud concepts.",
+      "href": "https://learn.microsoft.com/api/credentials/share/en-us/IsurangaBandara-1927/87FD3CE231A417EC?sharingId=1F4BB37D6AC03833",
+      "display": true
+    },
+    {
+      "title": "Career Essentials in GitHub Professional Certificate",
+      "issuer": "GitHub & LinkedIn Learning",
+      "year": "2024",
+      "description": "GitHub workflows, collaboration, and professional development practices.",
+      "href": "https://www.linkedin.com/learning/certificates/0023445596bd1868f5a203b0266c8b23500338aeb1b6eb01cc85b8a93f583632",
+      "display": true
+    },
+    {
+      "title": "Docker Foundations Professional Certificate",
+      "issuer": "Docker, Inc",
+      "year": "2024",
+      "description": "Container fundamentals, Docker architecture, and containerization best practices.",
+      "href": "https://www.linkedin.com/learning/certificates/b4c81c3bd88b24aa490b78fe62d6c93e4cfb2e0ac59a81b2ea045a5fb024cdf7",
+      "display": true
+    },
+    {
+      "title": ".NET Development for Beginners",
+      "issuer": "LinkedIn Learning",
+      "year": "2024",
+      "description": "Introduction to .NET framework and modern C# development patterns.",
+      "href": "https://www.linkedin.com/learning/certificates/8aa0ae9cf4de71ece1b1fe10e73bc7d0f27a11981458188b83ac41429ac539a8",
+      "display": false
+    },
+    {
+      "title": "Software Architecture Foundations",
+      "issuer": "LinkedIn Learning",
+      "year": "2024",
+      "description": "System design principles, architectural patterns, and scalable application design.",
+      "href": "https://www.linkedin.com/learning/certificates/765c88046f2961379e242c4c5faa7750b844e70e2628b47d4ca705246cf1840f",
+      "display": false
+    },
+    {
+      "title": "Build Your Own GPTs",
+      "issuer": "LinkedIn Learning",
+      "year": "2024",
+      "description": "Creating custom GPT models and AI-powered applications.",
+      "href": "https://www.linkedin.com/learning/certificates/765c88046f2961379e242c4c5faa7750b844e70e2628b47d4ca705246cf1840f",
+      "display": false
+    },
+    {
+      "title": "What Is Generative AI?",
+      "issuer": "LinkedIn Learning",
+      "year": "2024",
+      "description": "Fundamentals of generative AI, LLMs, and practical AI applications.",
+      "href": "https://www.linkedin.com/learning/certificates/1a3dcedc65471069bed5fb410b573db60d201d4262a6c80183d62376be404ae4",
+      "display": false
+    },
+    {
+      "title": "Responsible AI and Application Development",
+      "issuer": "LinkedIn Learning",
+      "year": "2024",
+      "description": "Ethical AI development and responsible practices in application design.",
+      "href": "https://www.linkedin.com/learning/certificates/6ab7b7c3ea1e97c93cd2b31d19b260870ec8fdffce28d1a6cd7eac7541e2a75c",
+      "display": false
+    }
+  ],
+  "projects": [
+    {
+      "title": "Hostel Management System",
+      "category": "Cloud-deployed management platform",
+      "year": "2025",
+      "imageKey": "hostel",
+      "summary": "Full-stack management system for handling tenant records, room allocation, and administrative operations with cloud deployment.",
+      "challenge": "Build a scalable system that manages multiple operational workflows while maintaining clean architecture and reliable deployments.",
+      "delivery": "Designed NestJS REST APIs with PostgreSQL, implemented Next.js frontend with TypeScript, containerized with Docker, and deployed on AWS EC2.",
+      "impact": "Demonstrated end-to-end full-stack delivery including automated CI/CD pipelines, comprehensive testing, and production-grade deployment.",
+      "stack": ["Next.js", "TypeScript", "NestJS", "PostgreSQL", "Docker", "AWS EC2", "GitHub Actions"],
+      "metrics": ["Scalable backend architecture", "Role-based access control", "Automated testing"],
+      "githubRepo": "https://github.com/AnushkaIsuranga/Hostel_Management_System",
+      "liveDemo": "https://hostel-management-system-frontend-seven.vercel.app/"
+    },
+    {
+      "title": "Duskwood Hospital Appointment System",
+      "category": "Full-stack healthcare platform",
+      "year": "2024",
+      "imageKey": "hospital",
+      "summary": "A production-style appointment and patient record platform designed to reduce friction for patients, doctors, and administrators.",
+      "challenge": "Build a system that coordinates booking flows, record management, reminders, and reporting without overwhelming different user roles.",
+      "delivery": "Designed a role-aware experience with appointment scheduling, patient records, admin controls, and automated reminder workflows.",
+      "impact": "Turned a complex hospital workflow into a more reliable digital system with clearer operational visibility.",
+      "stack": ["React", "Vite", "Tailwind", "JavaScript", "MySQL", "Spring Boot"],
+      "metrics": ["Role-based dashboards", "Appointment orchestration", "Automated email reminders"],
+      "githubRepo": "https://github.com/AnushkaIsuranga/Hospital_Appointment_System",
+      "liveDemo": "https://hospital-appointment-system-delta.vercel.app/"
+    },
+    {
+      "title": "Dilthira Stock Portal",
+      "category": "Operations and reporting tool",
+      "year": "2023",
+      "imageKey": "stockPortal",
+      "summary": "A stock and transaction portal for a pepper co-op focused on clarity, reporting, and day-to-day inventory visibility.",
+      "challenge": "Create a straightforward administrative tool for stock, income, and transaction tracking using foundational web technologies.",
+      "delivery": "Built inventory, transaction, and user-management flows with reporting support for small-scale business operations.",
+      "impact": "Gave the co-op a more structured digital layer for stock accuracy and business reporting.",
+      "stack": ["HTML", "CSS", "JavaScript", "MySQL", "PHP", "Bootstrap"],
+      "metrics": ["Transaction records", "Stock visibility", "Admin reporting workflows"],
+      "githubRepo": "https://github.com/AnushkaIsuranga/Stock_Portal_for_Spice_Co.",
+      "liveDemo": ""
+    },
+    {
+      "title": "Horizon News Mobile App",
+      "category": "Mobile editorial product",
+      "year": "2024",
+      "imageKey": "horizon",
+      "summary": "A newsroom-oriented mobile app where readers, editors, and reporters each get workflows tailored to their role.",
+      "challenge": "Balance article publishing, account management, editorial review, and drafting inside a mobile-first product.",
+      "delivery": "Created role-specific capabilities for reading, rating, managing content, and drafting reports across the news lifecycle.",
+      "impact": "Showed how editorial tools can feel structured and intuitive on mobile while still supporting complex permissions.",
+      "stack": ["Kotlin", "MongoDB", "SQLite", "Express.js", "Node.js", "REST APIs"],
+      "metrics": ["Reporter draft workflow", "Editor moderation tools", "Mobile-first publishing"],
+      "githubRepo": "https://github.com/AnushkaIsuranga/Horizon_News_App",
+      "liveDemo": ""
+    },
+    {
+      "title": "EnviroSense Smog Tower System",
+      "category": "IoT and AI monitoring system",
+      "year": "2025",
+      "imageKey": "envirosense",
+      "summary": "An air-quality monitoring and purification concept combining IoT capture, forecasting, and environmental dashboards.",
+      "challenge": "Translate real-world environmental data into something measurable, forecastable, and useful for public monitoring.",
+      "delivery": "Connected sensing, forecasting, and cloud-based monitoring into a system that surfaces air-quality performance in real time.",
+      "impact": "Positioned environmental data as a decision-making tool rather than just a stream of raw measurements.",
+      "stack": ["Python", "Firebase", "C++", "Node.js", "Machine Learning", "IoT"],
+      "metrics": ["Real-time air monitoring", "Forecasting layer", "Cloud-connected reporting"],
+      "githubRepo": "https://github.com/AnushkaIsuranga/Smog_Towers_Project",
+      "liveDemo": "https://enviro-sense-nine.vercel.app/"
+    }
+  ],
+  "achievements": [
+    {
+      "title": "Batch Top – Diploma in Computer System Designing",
+      "year": "2024",
+      "description": "Achieved top position in the Diploma batch through consistent academic excellence."
+    },
+    {
+      "title": "Vice President – Sylvestrian Technology Society",
+      "year": "2023-2025",
+      "description": "Led technology initiatives including workshops, mentoring, and community building."
+    },
+    {
+      "title": "Young Achiever Award",
+      "year": "2019",
+      "description": "Recognized as Young Achiever at ESOFT Diploma Award Ceremony."
+    }
+  ],
+  "experiences": [
+    {
+      "period": "Apr 2025 - Present",
+      "type": "Work",
+      "title": "Bitzify",
+      "role": "Intern Full-Stack Software Developer",
+      "summary": "Developing production full-stack applications using modern web technologies. Designed backend systems for inventory and POS platforms, refactored frontend architecture, and contributed to payment system integration.",
+      "focus": ["ASP.NET backend", "Frontend architecture", "System design"]
+    },
+    {
+      "period": "Jul 2025 - Present",
+      "type": "Education",
+      "title": "National Institute of Business Management",
+      "role": "BSc in Computer Science with Artificial Intelligence",
+      "summary": "Undergraduate program focused on computer science fundamentals, artificial intelligence, and modern software engineering practices.",
+      "focus": ["AI/ML concepts", "System design", "Advanced programming"]
+    },
+    {
+      "period": "Mar 2024 - Jun 2025",
+      "type": "Education",
+      "title": "National Institute of Business Management",
+      "role": "Higher National Diploma in Software Engineering",
+      "summary": "Developed practical experience across full-stack delivery, OOP, APIs, databases, and collaborative software workflows.",
+      "focus": ["Full-stack delivery", "APIs", "Databases"]
+    },
+    {
+      "period": "Jan 2023 - Mar 2024",
+      "type": "Education",
+      "title": "National Institute of Business Management",
+      "role": "Diploma in Computer System Designing",
+      "summary": "Built core foundations in software design, programming, systems thinking, and technical problem-solving.",
+      "focus": ["System design", "Programming", "Problem-solving"]
+    },
+    {
+      "period": "Jun 2023 - Jan 2025",
+      "type": "Leadership",
+      "title": "St. Sylvester's College",
+      "role": "Vice President, Technology Society",
+      "summary": "Led technology awareness initiatives, peer mentoring, workshops, and collaboration across student communities.",
+      "focus": ["Mentoring", "Workshops", "Community building"]
+    },
+    {
+      "period": "Apr 2023 - May 2024",
+      "type": "Leadership",
+      "title": "St. Sylvester's College",
+      "role": "Committee Member, IT Society",
+      "summary": "Supported event planning, speaker sessions, and ICT community building through hands-on coordination.",
+      "focus": ["Event planning", "Speaker sessions", "ICT support"]
+    },
+    {
+      "period": "May 2022 - Aug 2022",
+      "type": "Education",
+      "title": "National Institute of Business Management",
+      "role": "Certificate in Software Engineering",
+      "summary": "Strengthened core programming, algorithms, and systems fundamentals through project-based learning.",
+      "focus": ["Algorithms", "Software fundamentals", "Projects"]
+    },
+    {
+      "period": "Feb 2017 - Jun 2018",
+      "type": "Education",
+      "title": "ESOFT Metro Campus, Matale",
+      "role": "DiTEC Diploma in Information Technology",
+      "summary": "Built an early foundation in ICT, productivity tools, hardware concepts, networking basics, and introductory programming.",
+      "focus": ["ICT foundation", "Networking basics", "Intro programming"]
+    }
+  ]
+}

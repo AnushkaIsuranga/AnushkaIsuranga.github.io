@@ -9,6 +9,7 @@ Check out my portfolio here: [anushkaisuranga.github.io](https://anushkaisuranga
 ## 📄 What's Inside
 
 The portfolio is designed to give an overview of:
+
 - **Projects**: A detailed showcase of my projects, with descriptions, technologies used, and links to the source code.
 - **Skills**: A breakdown of the technologies I work with, covering front-end, back-end, and full-stack development.
 - **Contact**: Easy access to my social media profiles and contact details.
@@ -21,6 +22,7 @@ The portfolio is designed to give an overview of:
 - **JavaScript**: For adding interactivity and client-side functionality.
 
 ### Deployment:
+
 - **Vite**: For building and bundling the project.
 - **GitHub Pages**: Hosting the portfolio directly from my GitHub repository.
 
