@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "project": "LinkedIn banner image prompt aligned to the portfolio visual style",
+  "recommended_variant": "glass-systems-hero",
+  "source_style_summary": {
+    "portfolio_identity": "Product-minded full-stack engineering with a polished editorial finish",
+    "visual_traits": [
+      "dark-first deep navy background",
+      "soft blue, cyan, indigo, and violet glow accents",
+      "glassmorphism panels with thin cool borders",
+      "subtle technical grid texture",
+      "clean premium layout with strong negative space",
+      "modern interface fragments instead of cluttered coding cliches"
+    ],
+    "palette": {
+      "bg": "#060b1a",
+      "bg_deep": "#030613",
+      "sky": "#60a5fa",
+      "accent": "#93c5fd",
+      "cyan": "#38bdf8",
+      "indigo": "#6366f1",
+      "violet": "#a78bfa",
+      "text_light": "#f8fafc"
+    }
+  },
+  "canvas": {
+    "aspect_ratio": "4:1",
+    "recommended_export": "wide LinkedIn personal-profile banner",
+    "composition_notes": [
+      "Keep the lower-left area quieter because a LinkedIn profile photo usually overlaps there.",
+      "Place the strongest visual detail around the center-right area.",
+      "Leave some clean negative space so text can be added later in Figma or Canva if needed."
+    ]
+  },
+  "quick_start": {
+    "variant_id": "glass-systems-hero",
+    "prompt": "Create a premium panoramic LinkedIn banner for a full-stack software engineer portfolio. Use a dark midnight navy to deep-blue gradient background with subtle atmospheric depth. Add a faint technical grid and a few soft glowing orbs in sky blue, cyan, indigo, and violet. Layer elegant translucent glass panels with blurred edges and thin cool-toned borders, inspired by modern product UI cards. Suggest web, backend, mobile, and AI systems through refined interface fragments, soft data lines, modular panels, and minimal analytics shapes. The mood should feel calm, confident, polished, and high-end, like a portfolio that balances engineering discipline with strong frontend craft. Keep the lower-left area visually quiet for profile-photo overlap, and concentrate the premium lighting and layered detail toward the center-right. Make it sleek, cinematic, editorial, minimal, and professional, with depth and glow but not neon chaos. No readable text inside the image.",
+    "negative_prompt": "no readable text, no letters, no logos, no watermark, no brand marks, no generic stock office scene, no laptop-on-desk cliche, no noisy cyberpunk city, no orange or red dominant lighting, no harsh contrast, no chaotic collage, no low-resolution blur, no distorted UI, no busy circuit board wallpaper"
+  },
+  "global_negative_prompt": "no readable text, no letters, no logos, no watermark, no brand marks, no generic stock office scene, no laptop-on-desk cliche, no noisy cyberpunk city, no orange or red dominant lighting, no harsh contrast, no chaotic collage, no low-resolution blur, no distorted UI, no busy circuit board wallpaper",
+  "variants": [
+    {
+      "id": "glass-systems-hero",
+      "label": "Recommended",
+      "use_case": "Best overall match for the current portfolio",
+      "prompt": "Create a premium panoramic LinkedIn banner for a full-stack software engineer portfolio. Use a dark midnight navy to deep-blue gradient background with subtle atmospheric depth. Add a faint technical grid and a few soft glowing orbs in sky blue, cyan, indigo, and violet. Layer elegant translucent glass panels with blurred edges and thin cool-toned borders, inspired by modern product UI cards. Suggest web, backend, mobile, and AI systems through refined interface fragments, soft data lines, modular panels, and minimal analytics shapes. The mood should feel calm, confident, polished, and high-end, like a portfolio that balances engineering discipline with strong frontend craft. Keep the lower-left area visually quiet for profile-photo overlap, and concentrate the premium lighting and layered detail toward the center-right. Make it sleek, cinematic, editorial, minimal, and professional, with depth and glow but not neon chaos. No readable text inside the image.",
+      "style_keywords": [
+        "glassmorphism",
+        "editorial tech",
+        "premium UI",
+        "ambient glow",
+        "clean futuristic",
+        "professional"
+      ]
+    },
+    {
+      "id": "abstract-engineering-flow",
+      "label": "Alternative",
+      "use_case": "More abstract and less UI-card-heavy",
+      "prompt": "Generate a wide professional banner image that represents full-stack engineering as a smooth visual system. Use deep navy and black-blue tones with layered cyan, blue, indigo, and soft violet light. Show elegant flowing paths, modular blocks, network nodes, subtle charts, and structured geometry to suggest APIs, data pipelines, scalable systems, and modern web products. Blend in a faint grid texture and soft glass surfaces so it still feels aligned with a premium portfolio interface. Keep the composition minimal and spacious, with the strongest detail on the center-right and a quieter bottom-left zone. The final image should look modern, intelligent, and visually disciplined, not flashy or gamer-like.",
+      "style_keywords": [
+        "systems design",
+        "data flow",
+        "calm motion",
+        "minimal abstract tech",
+        "blue editorial atmosphere"
+      ]
+    },
+    {
+      "id": "portraitless-product-scene",
+      "label": "Alternative",
+      "use_case": "Feels like a hero section background without using a person",
+      "prompt": "Design a cinematic wide banner that looks like the background of a polished software engineer portfolio hero section. Use a deep midnight gradient with soft radial glows, thin grid texture, floating translucent cards, blurred glass layers, and subtle interface depth. Hint at product design, backend architecture, and AI-assisted systems through elegant modular visual elements rather than literal devices or code screenshots. The image should feel premium, balanced, clean, and credible for LinkedIn: modern frontend sophistication, strong engineering undertone, and refined lighting in cool blue and indigo hues with a touch of violet. Keep space for later typography and avoid any text rendered by the AI.",
+      "style_keywords": [
+        "hero background",
+        "portfolio aesthetic",
+        "cool-toned depth",
+        "clean composition",
+        "high-end technology"
+      ]
+    }
+  ],
+  "recommended_settings": {
+    "quality": "high",
+    "stylization": "medium",
+    "detail_level": "clean and premium, not overly detailed",
+    "lighting": "soft volumetric glow with controlled contrast",
+    "text_rendering": "disabled or avoided",
+    "upscale_if_available": true
+  },
+  "post_edit_notes": [
+    "If you want your name or title on the banner, add it after generation in Figma or Canva instead of asking the AI to draw exact text.",
+    "If the result feels too purple, push the palette back toward navy, cyan, and sky blue to stay closer to the portfolio.",
+    "If the result feels too busy, reduce the number of floating panels and keep only one focal light cluster."
+  ]
+}

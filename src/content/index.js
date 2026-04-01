@@ -1,10 +1,12 @@
-import HMS from '../assets/HMS.png'
-import horizon from '../assets/HorizonNewsApp.png'
-import envirosense from '../assets/enviro_sense.png'
-import stockPortal from '../assets/stock_p.png'
+import HMS from '../assets/HMS.webp'
+import HostelApp from '../assets/HostelApp.webp'
+import horizon from '../assets/HorizonNewsApp.webp'
+import envirosense from '../assets/enviro_sense.webp'
+import stockPortal from '../assets/stock_p.webp'
 import portfolio from './portfolio.json'
 
 const projectImages = {
+  hostel: HostelApp,
   hospital: HMS,
   stockPortal,
   horizon,

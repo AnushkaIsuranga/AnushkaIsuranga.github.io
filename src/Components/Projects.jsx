@@ -24,8 +24,8 @@ function ProjectCaseStudy({ project, index }) {
   const imageOnRight = index % 2 !== 0
   const storyPanels = [
     { label: 'Challenge', text: project.challenge, labelClassName: 'text-[#7dd3fc]' },
-    { label: 'Delivery',  text: project.delivery,  labelClassName: 'text-indigo-300' },
-    { label: 'Impact',    text: project.impact,    labelClassName: 'text-violet-300' },
+    { label: 'Delivery', text: project.delivery, labelClassName: 'text-indigo-300' },
+    { label: 'Impact', text: project.impact, labelClassName: 'text-violet-300' },
   ]
 
   return (
@@ -35,11 +35,7 @@ function ProjectCaseStudy({ project, index }) {
         whileHover={{ y: -5 }}
         transition={{ duration: 0.24 }}
       >
-
-        
         <div className="xl:hidden">
-
-          
           <div className="relative h-[26rem] overflow-hidden rounded-t-[2rem]">
             <MobileParallax className="absolute inset-0" offset={68} scale={1.16}>
               <img
@@ -53,22 +49,17 @@ function ProjectCaseStudy({ project, index }) {
 
             <div className="absolute inset-0 bg-gradient-to-br from-sky-500/26 via-indigo-500/12 to-violet-500/24 mix-blend-screen" />
 
-            
             <div className="project-image-fade absolute inset-0" />
 
-            
             <div className="absolute inset-x-0 bottom-8 flex items-end justify-between gap-4 px-5">
               <div>
-                <p className="metric-label text-[#7dd3fc]">
-                  Case study {index + 1}
-                </p>
+                <p className="metric-label text-[#7dd3fc]">Case study {index + 1}</p>
                 <p className="mt-1.5 text-base font-semibold text-white">{project.category}</p>
               </div>
               <span className="eyebrow-chip">{project.year}</span>
             </div>
           </div>
 
-          
           <div className="relative z-10 -mt-6 mx-3 mb-3">
             <div className="glass-panel rounded-[1.7rem] p-5">
               <div className="flex flex-wrap items-center gap-3">
@@ -82,7 +73,6 @@ function ProjectCaseStudy({ project, index }) {
 
               <p className="mt-3 text-sm leading-7 text-slate-300">{project.summary}</p>
 
-              
               <div className="no-scrollbar mt-5 flex snap-x gap-3 overflow-x-auto pb-1">
                 {storyPanels.map((panel) => (
                   <div
@@ -95,7 +85,6 @@ function ProjectCaseStudy({ project, index }) {
                 ))}
               </div>
 
-              
               <div className="mt-5">
                 <p className="metric-label text-white/50">Tech stack</p>
                 <div className="mt-2.5 flex flex-wrap gap-2">
@@ -117,7 +106,6 @@ function ProjectCaseStudy({ project, index }) {
                 </div>
               </div>
 
-              
               <div className="mt-6 flex flex-wrap gap-3">
                 <motion.a
                   href={project.githubRepo}
@@ -151,7 +139,6 @@ function ProjectCaseStudy({ project, index }) {
           </div>
         </div>
 
-        
         <div className="hidden p-5 sm:p-6 lg:p-7 xl:flex xl:flex-row xl:items-stretch xl:gap-6">
           <div
             className={`xl:w-[410px] xl:shrink-0 ${imageOnRight ? 'xl:order-last' : 'xl:order-first'}`}
@@ -168,9 +155,7 @@ function ProjectCaseStudy({ project, index }) {
               <div className="project-image-overlay absolute inset-0" />
               <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5">
                 <div>
-                  <p className="metric-label text-[#7dd3fc]">
-                    Case study {index + 1}
-                  </p>
+                  <p className="metric-label text-[#7dd3fc]">Case study {index + 1}</p>
                   <p className="mt-2 text-lg font-semibold text-white">{project.category}</p>
                 </div>
                 <span className="eyebrow-chip">{project.year}</span>
@@ -286,47 +271,45 @@ export default function Projects() {
   ]
 
   return (
-    <section id="projects" className="section-shell" aria-labelledby="projects-title">
-      <div className="section-inner">
-        <div className="section-header max-w-3xl">
-          <Reveal>
-            <span className="section-label">Projects</span>
-          </Reveal>
-
-          <Reveal delay={0.05}>
-            <h2
-              id="projects-title"
-              className="section-title bg-gradient-to-r from-sky-300 via-indigo-300 to-violet-300 bg-clip-text text-transparent"
-            >
-              {siteContent.projectsSection.title}
-            </h2>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <p className="section-copy max-w-2xl">{siteContent.projectsSection.copy}</p>
-          </Reveal>
-        </div>
-
-        <Reveal delay={0.14} className="mt-8">
-          <div className="no-scrollbar flex snap-x gap-4 overflow-x-auto pb-2 md:grid md:grid-cols-3 md:overflow-visible md:pb-0">
-            {projectSummary.map((item) => (
-              <div
-                key={item.label}
-                className="stat-card min-w-[14rem] snap-start border border-indigo-200/20 bg-gradient-to-br from-sky-500/12 via-indigo-500/10 to-violet-500/12 md:min-w-0"
-              >
-                <p className="metric-value text-white">{item.value}</p>
-                <p className="metric-label mt-3 text-indigo-200/75">{item.label}</p>
-              </div>
-            ))}
-          </div>
+    <div className="section-inner">
+      <div className="section-header max-w-3xl">
+        <Reveal>
+          <span className="section-label">Projects</span>
         </Reveal>
 
-        <div className="mt-10 space-y-8">
-          {projectsData.map((project, index) => (
-            <ProjectCaseStudy key={project.title} project={project} index={index} />
+        <Reveal delay={0.05}>
+          <h2
+            id="projects-title"
+            className="section-title bg-gradient-to-r from-sky-300 via-indigo-300 to-violet-300 bg-clip-text text-transparent"
+          >
+            {siteContent.projectsSection.title}
+          </h2>
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <p className="section-copy max-w-2xl">{siteContent.projectsSection.copy}</p>
+        </Reveal>
+      </div>
+
+      <Reveal delay={0.14} className="mt-8">
+        <div className="no-scrollbar flex snap-x gap-4 overflow-x-auto pb-2 md:grid md:grid-cols-3 md:overflow-visible md:pb-0">
+          {projectSummary.map((item) => (
+            <div
+              key={item.label}
+              className="stat-card min-w-[14rem] snap-start border border-indigo-200/20 bg-gradient-to-br from-sky-500/12 via-indigo-500/10 to-violet-500/12 md:min-w-0"
+            >
+              <p className="metric-value text-white">{item.value}</p>
+              <p className="metric-label mt-3 text-indigo-200/75">{item.label}</p>
+            </div>
           ))}
         </div>
+      </Reveal>
+
+      <div className="mt-10 space-y-8">
+        {projectsData.map((project, index) => (
+          <ProjectCaseStudy key={project.title} project={project} index={index} />
+        ))}
       </div>
-    </section>
+    </div>
   )
 }

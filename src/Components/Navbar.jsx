@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { FiMoon, FiSun } from 'react-icons/fi'
 import { AnimatePresence, motion } from 'motion/react'
-import favicon from '../assets/favicon.png'
+import favicon from '../assets/favicon.webp'
 import { navigationSections, siteContent } from '../content'
 
 function ThemeToggleButton({ onToggleTheme, theme }) {
@@ -99,10 +99,15 @@ export default function Navbar({ onToggleTheme, theme }) {
   }, [isMobileOpen])
 
   const scrollToSection = (sectionId) => {
-    document.getElementById(sectionId)?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    })
+    if (sectionId === 'hero') {
+      document.getElementById(sectionId)?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    } else {
+      window.dispatchEvent(new CustomEvent('portfolio:navigate', { detail: { sectionId } }))
+    }
+
     setIsMobileOpen(false)
   }
 
@@ -222,7 +227,6 @@ export default function Navbar({ onToggleTheme, theme }) {
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="grid gap-1">
-
               {navigationSections.map((section) => {
                 const isActive = activeSection === section.id
 
