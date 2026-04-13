@@ -4,6 +4,7 @@ import horizon from '../assets/HorizonNewsApp.webp'
 import envirosense from '../assets/enviro_sense.webp'
 import stockPortal from '../assets/stock_p.webp'
 import portfolio from './portfolio.json'
+import hotel_booking from '../assets/hotel_booking.webp'
 
 const projectImages = {
   hostel: HostelApp,
@@ -11,6 +12,7 @@ const projectImages = {
   stockPortal,
   horizon,
   envirosense,
+  hotel_booking
 }
 
 const getStartYear = (period = '') => {
