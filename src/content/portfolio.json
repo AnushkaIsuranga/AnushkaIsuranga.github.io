@@ -190,6 +190,8 @@
           { "label": "Spring Boot", "iconKey": "springboot" },
           { "label": "Node.js", "iconKey": "nodejs" },
           { "label": "Express.js", "iconKey": "expressjs" },
+          { "label": "Laravel", "iconKey": "laravel" },
+          { "label": "Inertia.js", "iconKey": "inertiajs" },
           { "label": "Python", "iconKey": "python" },
           { "label": "ASP.NET", "iconKey": "dotnet" },
           { "label": "Nest.js", "iconKey": "nestjs" },
@@ -389,7 +391,7 @@
     {
       "title": "Hostel Management System",
       "category": "Cloud-deployed management platform",
-      "year": "2025",
+      "year": "2026",
       "imageKey": "hostel",
       "summary": "Full-stack management system for handling tenant records, room allocation, and administrative operations with cloud deployment.",
       "challenge": "Build a scalable system that manages multiple operational workflows while maintaining clean architecture and reliable deployments.",
@@ -413,6 +415,20 @@
       "metrics": ["Role-based dashboards", "Appointment orchestration", "Automated email reminders"],
       "githubRepo": "https://github.com/AnushkaIsuranga/Hospital_Appointment_System",
       "liveDemo": "https://hospital-appointment-system-delta.vercel.app/"
+    },
+    {
+      "title": "Asteria Desk Hotel Booking System",
+      "category": "Web-based hospitality management system",
+      "year": "2026",
+      "imageKey": "hotel_booking",
+      "summary": "A Laravel-based hotel booking platform built to learn MVC architecture, covering reservations, room inventory, staff access, and operational dashboards.",
+      "challenge": "Structure a real-world hotel management workflow with clear separation of concerns, role-based access, and maintainable data handling across bookings, rooms, and team accounts.",
+      "delivery": "Built the system with Laravel, Inertia.js, React, and TypeScript using an MVC pattern for authentication, CRUD workflows, dashboard reporting, and hotel operations management.",
+      "impact": "Demonstrated how a full-stack Laravel application can stay organized, scalable, and user-friendly while handling core hospitality operations in one place.",
+      "stack": ["PHP", "Laravel", "Inertia.js", "React", "TypeScript", "SQLite", "Tailwind CSS", "Vite", "MVC Architecture"],
+      "metrics": ["Role-based staff/admin access", "Booking and inventory management", "Operational dashboard", "Responsive UI"],
+      "githubRepo": "https://github.com/AnushkaIsuranga/hotel_booking_system",
+      "liveDemo": ""
     },
     {
       "title": "Dilthira Stock Portal",
@@ -476,7 +492,7 @@
   ],
   "experiences": [
     {
-      "period": "Apr 2025 - Present",
+      "period": "Apr 2025 - Apr 2026",
       "type": "Work",
       "title": "Bitzify",
       "role": "Intern Full-Stack Software Developer",
