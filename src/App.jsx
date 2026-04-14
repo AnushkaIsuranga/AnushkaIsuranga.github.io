@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import CustomCursor from './Components/CustomCursor'
+import ChatbotWidget from './Components/ChatbotWidget'
 import Hero from './Components/Hero'
 import Navbar from './Components/Navbar'
 import OrientationOverlay from './Components/OrientationOverlay'
@@ -290,6 +291,7 @@ function App() {
       <div className="ambient-orb ambient-orb-two" aria-hidden="true" />
 
       <OrientationOverlay isVisible={shouldShowOverlay} />
+      <ChatbotWidget />
 
       <Navbar
         theme={theme}

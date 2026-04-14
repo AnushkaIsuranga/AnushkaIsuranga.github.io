@@ -44,3 +44,24 @@ The portfolio is designed to give an overview of:
 - [Portfolio](https://anushkaisuranga.github.io)
 - [LinkedIn](https://www.linkedin.com/in/anushka-isuranga/)
 - [GitHub](https://github.com/AnushkaIsuranga)
+
+## AI Chatbot (Gemini - Frontend Only)
+
+This portfolio includes an AI assistant widget powered by Google Gemini (gemini-2.0-flash) and called directly from the frontend.
+
+### Setup
+
+1. Create a free Gemini API key from [Google AI Studio](https://aistudio.google.com).
+2. Add the key to `.env`:
+
+	```
+	VITE_GEMINI_API_KEY=your_key_here
+	```
+
+3. Restart the dev server.
+
+### Production Safety
+
+- Restrict the API key by HTTP referrer in Google Cloud Console.
+- Allow only your domains (for example: `anushkaisuranga.github.io`).
+- Keep response usage within Gemini free-tier limits.
