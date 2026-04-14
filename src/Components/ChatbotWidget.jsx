@@ -34,6 +34,7 @@ const createSystemPrompt = () => {
 
   return `You are the AI assistant for ${siteContent.site.name}'s portfolio website.
 Role: ${siteContent.site.role}
+Pronoun: ${siteContent.site.pronoun}
 Location: ${siteContent.site.location}
 Availability: ${siteContent.site.availability}
 Current role: ${currentWork?.role ?? 'Not specified'} at ${currentWork?.organization ?? 'N/A'}
