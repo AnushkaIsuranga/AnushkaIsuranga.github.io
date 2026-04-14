@@ -45,23 +45,23 @@ The portfolio is designed to give an overview of:
 - [LinkedIn](https://www.linkedin.com/in/anushka-isuranga/)
 - [GitHub](https://github.com/AnushkaIsuranga)
 
-## AI Chatbot (Gemini - Frontend Only)
+## AI Chatbot (Groq - Frontend Only)
 
-This portfolio includes an AI assistant widget powered by Google Gemini (gemini-2.0-flash) and called directly from the frontend.
+This portfolio includes an AI assistant widget powered by Groq and called directly from the frontend.
 
 ### Setup
 
-1. Create a free Gemini API key from [Google AI Studio](https://aistudio.google.com).
+1. Create a free Groq API key from [Groq Console](https://console.groq.com).
 2. Add the key to `.env`:
 
 	```
-	VITE_GEMINI_API_KEY=your_key_here
+	VITE_GROQ_API_KEY=your_key_here
 	```
 
 3. Restart the dev server.
 
 ### Production Safety
 
-- Restrict the API key by HTTP referrer in Google Cloud Console.
+- Keep your Groq API key private and rotate it if exposed.
 - Allow only your domains (for example: `anushkaisuranga.github.io`).
-- Keep response usage within Gemini free-tier limits.
+- Keep response usage within Groq free-tier limits.

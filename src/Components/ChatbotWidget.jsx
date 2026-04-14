@@ -2,8 +2,8 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { FiLoader, FiMessageSquare, FiSend, FiX } from 'react-icons/fi'
 import { currentWork, projectsData, siteContent, socialLinks } from '../content'
 
-const GEMINI_ENDPOINT =
-  'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent'
+const GROQ_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions'
+const GROQ_MODEL = 'llama-3.3-70b-versatile'
 const MAX_INPUT_LENGTH = 260
 const MAX_HISTORY_ITEMS = 12
 
@@ -49,9 +49,9 @@ Rules:
 - Do not invent facts.`
 }
 
-const toGeminiMessage = (role, text) => ({
+const toChatMessage = (role, text) => ({
   role,
-  parts: [{ text }],
+  content: text,
 })
 
 export default function ChatbotWidget() {
@@ -69,7 +69,7 @@ export default function ChatbotWidget() {
   ])
   const [history, setHistory] = useState([])
 
-  const geminiApiKey = import.meta.env.VITE_GEMINI_API_KEY
+  const groqApiKey = import.meta.env.VITE_GROQ_API_KEY
   const systemPrompt = useMemo(() => createSystemPrompt(), [])
 
   const pushMessage = (role, text) => {
@@ -107,34 +107,30 @@ export default function ChatbotWidget() {
     pushMessage('user', text)
     setInputValue('')
 
-    if (!geminiApiKey) {
+    if (!groqApiKey) {
       pushMessage(
         'bot',
-        'Gemini API key is missing. Add VITE_GEMINI_API_KEY to your environment to enable chat.'
+        'Groq API key is missing. Add VITE_GROQ_API_KEY to your environment.'
       )
       return
     }
 
-    const nextHistory = [...history, toGeminiMessage('user', text)].slice(-MAX_HISTORY_ITEMS)
+    const nextHistory = [...history, toChatMessage('user', text)].slice(-MAX_HISTORY_ITEMS)
     setHistory(nextHistory)
     setIsLoading(true)
 
     try {
-      const response = await fetch(GEMINI_ENDPOINT, {
+      const response = await fetch(GROQ_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-goog-api-key': geminiApiKey,
+          Authorization: `Bearer ${groqApiKey}`,
         },
         body: JSON.stringify({
-          system_instruction: {
-            parts: [{ text: systemPrompt }],
-          },
-          contents: nextHistory,
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 500,
-          },
+          model: GROQ_MODEL,
+          messages: [{ role: 'system', content: systemPrompt }, ...nextHistory],
+          temperature: 0.7,
+          max_tokens: 500,
         }),
       })
 
@@ -142,38 +138,30 @@ export default function ChatbotWidget() {
         const errorBody = await response.json().catch(() => null)
         const statusText = errorBody?.error?.status ?? 'REQUEST_FAILED'
         const messageText =
-          errorBody?.error?.message ?? `Gemini request failed with status ${response.status}`
-        throw new Error(`Gemini ${response.status} ${statusText}: ${messageText}`)
+          errorBody?.error?.message ?? `Groq request failed with status ${response.status}`
+        throw new Error(`Groq ${response.status} ${statusText}: ${messageText}`)
       }
 
       const data = await response.json()
-      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text
+      const reply = data.choices?.[0]?.message?.content
 
       if (!reply) {
-        throw new Error('Empty response from Gemini')
+        throw new Error('Empty response from Groq')
       }
 
       pushMessage('bot', reply)
-      setHistory((current) => [...current, toGeminiMessage('model', reply)].slice(-MAX_HISTORY_ITEMS))
+      setHistory((current) => [...current, toChatMessage('assistant', reply)].slice(-MAX_HISTORY_ITEMS))
     } catch (error) {
       if (
         error instanceof Error &&
-        (error.message.includes('429') || error.message.includes('RESOURCE_EXHAUSTED'))
+        (error.message.includes('429') || error.message.includes('rate_limit'))
       ) {
-        pushMessage(
-          'bot',
-          'Gemini quota/rate limit reached. Wait 60-90 seconds and try again, or check quota usage in Google AI Studio.'
-        )
+        pushMessage('bot', 'Rate limit reached. Wait a moment and try again.')
       } else if (
         error instanceof Error &&
-        (error.message.includes('PERMISSION_DENIED') ||
-          error.message.includes('API key not valid') ||
-          error.message.includes('403'))
+        (error.message.includes('401') || error.message.includes('403'))
       ) {
-        pushMessage(
-          'bot',
-          'API key is invalid or blocked by restrictions. Verify key value and allowed referrers in Google Cloud Console.'
-        )
+        pushMessage('bot', 'API key is invalid. Check VITE_GROQ_API_KEY in your environment.')
       } else {
         pushMessage('bot', 'I could not answer right now. Please try again in a moment.')
       }
