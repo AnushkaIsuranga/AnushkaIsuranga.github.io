@@ -24,3 +24,6 @@ dist-ssr
 vendor/phpmailer/phpmailer/
 
 *.env
+.env
+.env.*
+!.env.example
