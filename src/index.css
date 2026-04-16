@@ -77,6 +77,7 @@
   --cursor-glow-default: rgba(125, 211, 252, 0.1);
   --cursor-particle: rgba(125, 211, 252, 0.9);
   --cursor-glow-blend: screen;
+  --chatbot-code-text: #c9d1d9;
 }
 
 :root[data-theme='light'] {
@@ -155,6 +156,7 @@
   --cursor-glow-default: rgba(37, 99, 235, 0.12);
   --cursor-particle: rgba(37, 99, 235, 0.72);
   --cursor-glow-blend: multiply;
+  --chatbot-code-text: #0f172a;
 }
 
 @layer base {
@@ -612,7 +614,7 @@
   }
 
   .chatbot-markdown strong {
-    color: #ffffff;
+    color: var(--text);
     font-weight: 700;
   }
 
@@ -646,7 +648,7 @@
     font-size: 0.76rem;
     line-height: 1.6;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    color: #c9d1d9;
+    color: var(--chatbot-code-text);
     white-space: pre;
   }
 
