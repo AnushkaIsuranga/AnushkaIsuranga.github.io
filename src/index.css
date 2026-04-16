@@ -165,7 +165,25 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 6.5rem;
+    scroll-padding-top: 90px;
+  }
+
+  html.theme-transition,
+  html.theme-transition *,
+  html.theme-transition *::before,
+  html.theme-transition *::after {
+    transition-property: background-color, color, border-color, box-shadow, fill, stroke;
+    transition-duration: 420ms;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.theme-transition,
+    html.theme-transition *,
+    html.theme-transition *::before,
+    html.theme-transition *::after {
+      transition-duration: 0.01ms;
+    }
   }
 
   body {
@@ -540,6 +558,96 @@
     color: var(--text);
     background: var(--surface-bg);
     border: 1px solid var(--surface-border);
+  }
+
+  .chatbot-markdown {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .chatbot-markdown > :first-child {
+    margin-top: 0;
+  }
+
+  .chatbot-markdown > :last-child {
+    margin-bottom: 0;
+  }
+
+  .chatbot-markdown p,
+  .chatbot-markdown ul,
+  .chatbot-markdown ol,
+  .chatbot-markdown blockquote,
+  .chatbot-markdown pre {
+    margin: 0 0 0.55rem;
+  }
+
+  .chatbot-markdown ul,
+  .chatbot-markdown ol {
+    padding-left: 1rem;
+  }
+
+  .chatbot-markdown ul {
+    list-style: disc;
+  }
+
+  .chatbot-markdown ol {
+    list-style: decimal;
+  }
+
+  .chatbot-markdown li + li {
+    margin-top: 0.3rem;
+  }
+
+  .chatbot-markdown h1,
+  .chatbot-markdown h2,
+  .chatbot-markdown h3,
+  .chatbot-markdown h4,
+  .chatbot-markdown h5,
+  .chatbot-markdown h6 {
+    margin: 0.1rem 0 0.45rem;
+    font-size: 0.9rem;
+    line-height: 1.35;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .chatbot-markdown strong {
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .chatbot-markdown :not(pre) > code {
+    padding: 0.1rem 0.34rem;
+    border-radius: 0.35rem;
+    background: rgba(148, 163, 184, 0.16);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.78rem;
+  }
+
+  .chatbot-markdown a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+
+  .chatbot-markdown pre {
+    margin: 0;
+    padding: 0.75rem;
+    overflow-x: auto;
+    border-radius: 0.6rem;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--line);
+  }
+
+  .chatbot-markdown pre code {
+    display: block;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.76rem;
+    line-height: 1.6;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    color: #c9d1d9;
+    white-space: pre;
   }
 
   .chatbot-message.is-user {

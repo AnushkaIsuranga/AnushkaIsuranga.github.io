@@ -19,44 +19,60 @@ const deferredSections = [
     labelledBy: 'about-title',
     sectionClassName: 'section-shell overflow-x-hidden',
     loader: () => import('./Components/About'),
-    fallbackClassName: 'min-h-[34rem]',
+    fallbackClassName: 'min-h-[50rem]',
   },
   {
     id: 'stack',
     labelledBy: 'stack-title',
     sectionClassName: 'section-shell',
     loader: () => import('./Components/TechStack'),
-    fallbackClassName: 'min-h-[38rem]',
+    fallbackClassName: 'min-h-[46rem]',
   },
   {
     id: 'experience',
     labelledBy: 'experience-title',
     sectionClassName: 'section-shell overflow-x-hidden',
     loader: () => import('./Components/Experience'),
-    fallbackClassName: 'min-h-[42rem]',
+    fallbackClassName: 'min-h-[58rem]',
   },
   {
     id: 'certifications',
     labelledBy: 'certifications-title',
     sectionClassName: 'section-shell',
     loader: () => import('./Components/Certifications'),
-    fallbackClassName: 'min-h-[34rem]',
+    fallbackClassName: 'min-h-[40rem]',
   },
   {
     id: 'projects',
     labelledBy: 'projects-title',
     sectionClassName: 'section-shell',
     loader: () => import('./Components/Projects'),
-    fallbackClassName: 'min-h-[52rem]',
+    fallbackClassName: 'min-h-[76rem]',
   },
   {
     id: 'contact',
     labelledBy: 'contact-title',
     sectionClassName: 'section-shell pb-16',
     loader: () => import('./Components/Contact'),
-    fallbackClassName: 'min-h-[32rem]',
+    fallbackClassName: 'min-h-[52rem]',
   },
 ]
+
+const getScrollPaddingTop = () => {
+  const value = window.getComputedStyle(document.documentElement).scrollPaddingTop
+  const parsed = Number.parseFloat(value)
+  return Number.isFinite(parsed) ? parsed : 0
+}
+
+const scrollToSectionWithOffset = (sectionId, behavior = 'smooth') => {
+  const element = document.getElementById(sectionId)
+  if (!element) return
+
+  element.scrollIntoView({
+    behavior,
+    block: 'start',
+  })
+}
 
 function DeferredSection({
   fallbackClassName,
@@ -153,10 +169,28 @@ function App() {
   const [pendingScrollId, setPendingScrollId] = useState(null)
   const [preloadedSectionIds, setPreloadedSectionIds] = useState(() => new Set())
   const [theme, setTheme] = useState(resolveInitialTheme)
+  const lastScrollRequestRef = useRef(null)
   const { complete } = useProgressLoader({
     assetUrls: criticalAssets,
   })
   const { shouldShowOverlay } = useOrientationDetector()
+
+  const handleToggleTheme = () => {
+    const root = document.documentElement
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    if (!prefersReducedMotion) {
+      root.classList.add('theme-transition')
+    }
+
+    setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'))
+
+    if (!prefersReducedMotion) {
+      window.setTimeout(() => {
+        root.classList.remove('theme-transition')
+      }, 450)
+    }
+  }
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -227,10 +261,7 @@ function App() {
 
       const targetIndex = deferredSections.findIndex((section) => section.id === sectionId)
       if (targetIndex === -1) {
-        document.getElementById(sectionId)?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        })
+        scrollToSectionWithOffset(sectionId, 'smooth')
         return
       }
 
@@ -251,6 +282,10 @@ function App() {
       return undefined
     }
 
+    if (lastScrollRequestRef.current === pendingScrollId) {
+      return undefined
+    }
+
     const targetIndex = deferredSections.findIndex((section) => section.id === pendingScrollId)
     if (targetIndex === -1) {
       return undefined
@@ -262,20 +297,26 @@ function App() {
       return undefined
     }
 
+    lastScrollRequestRef.current = pendingScrollId
+
     let innerFrameId = 0
+    let correctionTimeoutId = 0
+    const targetSectionId = pendingScrollId
     const frameId = window.requestAnimationFrame(() => {
       innerFrameId = window.requestAnimationFrame(() => {
-        document.getElementById(pendingScrollId)?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        })
-        setPendingScrollId(null)
+        scrollToSectionWithOffset(targetSectionId, 'smooth')
+
+        correctionTimeoutId = window.setTimeout(() => {
+          scrollToSectionWithOffset(targetSectionId, 'auto')
+          setPendingScrollId(null)
+        }, 420)
       })
     })
 
     return () => {
       window.cancelAnimationFrame(frameId)
       window.cancelAnimationFrame(innerFrameId)
+      window.clearTimeout(correctionTimeoutId)
     }
   }, [loadedSectionIds, pendingScrollId])
 
@@ -295,9 +336,7 @@ function App() {
 
       <Navbar
         theme={theme}
-        onToggleTheme={() =>
-          setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'))
-        }
+        onToggleTheme={handleToggleTheme}
       />
 
       <main id="content" className="page-main">

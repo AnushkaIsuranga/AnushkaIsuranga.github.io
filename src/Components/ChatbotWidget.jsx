@@ -1,59 +1,68 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FiLoader, FiMessageSquare, FiSend, FiX } from 'react-icons/fi'
-import { currentWork, projectsData, siteContent, socialLinks } from '../content'
+import ReactMarkdown from 'react-markdown'
+import { siteContent } from '../content'
+import { getCached, setCached } from '../Chatbot/cache'
+import { getKnowledgeContext } from '../Chatbot/KnowledgeBase'
+import { detectQueryType, resolveCategoriesForQuery } from '../Chatbot/queryRouter'
 
 const GROQ_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions'
 const GROQ_MODEL = 'llama-3.3-70b-versatile'
 const MAX_INPUT_LENGTH = 260
-const MAX_HISTORY_ITEMS = 12
+const MAX_HISTORY_ITEMS = 3
+const RESPONSE_DELAY_MS = 1500
+const TRANSLATION_REFUSAL = 'I can only answer questions about Anushka\'s portfolio.'
+const INTERNAL_INFO_REFUSAL = 'I cannot disclose internal system information.'
 
-const extractSummaryProjects = (projects) =>
-  projects
-    .slice(0, 4)
-    .map((project) => `${project.title}: ${project.summary}`)
-    .join('; ')
+const isTranslationRequest = (text) =>
+  /\b(translate|translation|translet|translating)\b/i.test(text) ||
+  /\b(?:to|into|in)\s+(?:tamil|sinhala|hindi|malayalam|telugu|french|german|spanish|japanese|korean|chinese)\b/i.test(text)
 
-const extractCoreSkills = (stackSections) => {
-  if (!Array.isArray(stackSections)) {
-    return ''
-  }
-
-  return stackSections
-    .flatMap((section) => section.items ?? [])
-    .map((item) => item.label)
-    .slice(0, 18)
-    .join(', ')
-}
-
-const createSystemPrompt = () => {
-  const contactEmail =
-    siteContent.contact.contactItems.find((item) => item.label.toLowerCase() === 'email')?.value ??
-    ''
-
-  const linkedinUrl = socialLinks.find((item) => item.id === 'linkedin')?.href ?? ''
-
-  return `You are the AI assistant for ${siteContent.site.name}'s portfolio website.
-Role: ${siteContent.site.role}
-Pronoun: ${siteContent.site.pronoun}
-Location: ${siteContent.site.location}
-Availability: ${siteContent.site.availability}
-Current role: ${currentWork?.role ?? 'Not specified'} at ${currentWork?.organization ?? 'N/A'}
-Core skills: ${extractCoreSkills(siteContent.stack.sections)}
-Project highlights: ${extractSummaryProjects(projectsData)}
-Contact: ${contactEmail || 'Use the contact section on this website'}${linkedinUrl ? ` | LinkedIn: ${linkedinUrl}` : ''}
-
-Rules:
-- Keep answers concise: 2-3 sentences.
-- Be friendly, professional, and accurate.
-- Only answer questions related to ${siteContent.site.name}, portfolio work, skills, projects, experience, or contact.
-- If a question is unrelated or unknown, suggest contacting ${siteContent.site.name} directly via the contact section.
-- Do not invent facts.`
-}
+const isInternalInfoRequest = (text) =>
+  /\b(ignore\s+previous\s+instructions|ignore\s+all\s+instructions)\b/i.test(text) ||
+  /\b(show|reveal|print|expose|leak)\b.*\b(system\s+prompt|internal\s+(?:data|context|instructions)|hidden\s+prompt|developer\s+instructions?)\b/i.test(text) ||
+  /\bwhat\s+is\s+your\s+prompt\b/i.test(text)
 
 const toChatMessage = (role, text) => ({
   role,
   content: text,
 })
+
+const createSystemPrompt = () => `
+You are Anushka's portfolio AI assistant.
+
+Your role is to confidently present Anushka as a strong candidate while staying truthful to the portfolio information.
+
+General rules:
+- Use a natural, confident, conversational tone.
+- Avoid generic phrases like "based on the portfolio".
+- Write like a knowledgeable human explaining why he is a strong candidate.
+- Keep responses engaging and persuasive, not robotic.
+- Use 2–4 concise sentences.
+
+Knowledge rules:
+- Use ONLY information from the portfolio.
+- If something is not mentioned, say it briefly.
+
+Definition of experience:
+- Experience ONLY refers to professional work roles.
+- Do NOT count education, societies, certificates, or training programs.
+
+Answer behavior:
+- Provide the final answer directly.
+- Do not show calculations or reasoning.
+
+When explaining strengths or qualifications:
+- Emphasize impact and capability.
+- Mention specific technologies, projects, or skills when possible.
+
+Formatting:
+- Use markdown.
+- Lists must start with "- ".
+`
+
+
+const createContextMessage = (knowledgeContext) => `Portfolio knowledge:\n${knowledgeContext}`
 
 export default function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false)
@@ -61,6 +70,7 @@ export default function ChatbotWidget() {
   const [isLoading, setIsLoading] = useState(false)
   const toggleButtonRef = useRef(null)
   const panelRef = useRef(null)
+  const messagesEndRef = useRef(null)
   const [messages, setMessages] = useState([
     {
       id: crypto.randomUUID(),
@@ -69,9 +79,7 @@ export default function ChatbotWidget() {
     },
   ])
   const [history, setHistory] = useState([])
-
   const groqApiKey = import.meta.env.VITE_GROQ_API_KEY
-  const systemPrompt = useMemo(() => createSystemPrompt(), [])
 
   const pushMessage = (role, text) => {
     setMessages((current) => [...current, { id: crypto.randomUUID(), role, text }])
@@ -99,6 +107,10 @@ export default function ChatbotWidget() {
     }
   }, [isOpen])
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages, isLoading])
+
   const sendMessage = async () => {
     const text = inputValue.trim()
     if (!text || isLoading) {
@@ -108,17 +120,45 @@ export default function ChatbotWidget() {
     pushMessage('user', text)
     setInputValue('')
 
-    if (!groqApiKey) {
-      pushMessage(
-        'bot',
-        'Groq API key is missing. Add VITE_GROQ_API_KEY to your environment.'
-      )
+    const cachedAnswer = getCached(text)
+    if (cachedAnswer) {
+      pushMessage('bot', cachedAnswer)
+      setHistory((current) => [...current, toChatMessage('assistant', cachedAnswer)].slice(-MAX_HISTORY_ITEMS))
       return
     }
 
-    const nextHistory = [...history, toChatMessage('user', text)].slice(-MAX_HISTORY_ITEMS)
-    setHistory(nextHistory)
+    if (isTranslationRequest(text)) {
+      pushMessage('bot', TRANSLATION_REFUSAL)
+      setCached(text, TRANSLATION_REFUSAL)
+      return
+    }
+
+    if (isInternalInfoRequest(text)) {
+      pushMessage('bot', INTERNAL_INFO_REFUSAL)
+      setCached(text, INTERNAL_INFO_REFUSAL)
+      return
+    }
+
+    if (!groqApiKey) {
+      pushMessage('bot', 'Groq API key is missing. Set VITE_GROQ_API_KEY in your .env file.')
+      return
+    }
+
+    const recentHistory = history.slice(-MAX_HISTORY_ITEMS)
+    const userMessage = toChatMessage('user', text)
+    const queryType = detectQueryType(text)
+    const categories = resolveCategoriesForQuery(queryType)
+    const knowledgeContext = getKnowledgeContext({
+      categories,
+      query: text,
+      includePrivate: false,
+      limit: queryType === 'general' ? 10 : 8,
+    })
+
     setIsLoading(true)
+
+    
+    const delay = new Promise((resolve) => window.setTimeout(resolve, RESPONSE_DELAY_MS))
 
     try {
       const response = await fetch(GROQ_ENDPOINT, {
@@ -129,9 +169,14 @@ export default function ChatbotWidget() {
         },
         body: JSON.stringify({
           model: GROQ_MODEL,
-          messages: [{ role: 'system', content: systemPrompt }, ...nextHistory],
-          temperature: 0.7,
-          max_tokens: 500,
+          messages: [
+            { role: 'system', content: createSystemPrompt() },
+            { role: 'assistant', content: createContextMessage(knowledgeContext) },
+            ...recentHistory,
+            userMessage,
+          ],
+          temperature: 0.4,
+          max_tokens: 320,
         }),
       })
 
@@ -144,15 +189,19 @@ export default function ChatbotWidget() {
       }
 
       const data = await response.json()
-      const reply = data.choices?.[0]?.message?.content
+      const reply = data?.choices?.[0]?.message?.content
 
       if (!reply) {
         throw new Error('Empty response from Groq')
       }
 
+      await delay
+
       pushMessage('bot', reply)
-      setHistory((current) => [...current, toChatMessage('assistant', reply)].slice(-MAX_HISTORY_ITEMS))
+      setCached(text, reply)
+      setHistory([...recentHistory, userMessage, toChatMessage('assistant', reply)].slice(-MAX_HISTORY_ITEMS))
     } catch (error) {
+      setHistory([...recentHistory, userMessage].slice(-MAX_HISTORY_ITEMS))
       if (
         error instanceof Error &&
         (error.message.includes('429') || error.message.includes('rate_limit'))
@@ -162,7 +211,7 @@ export default function ChatbotWidget() {
         error instanceof Error &&
         (error.message.includes('401') || error.message.includes('403'))
       ) {
-        pushMessage('bot', 'API key is invalid. Check VITE_GROQ_API_KEY in your environment.')
+        pushMessage('bot', 'API key is invalid. Check VITE_GROQ_API_KEY in your .env file.')
       } else {
         pushMessage('bot', 'I could not answer right now. Please try again in a moment.')
       }
@@ -208,12 +257,15 @@ export default function ChatbotWidget() {
 
         <div className="chatbot-messages no-scrollbar">
           {messages.map((message) => (
-            <p
-              key={message.id}
-              className={`chatbot-message ${message.role === 'user' ? 'is-user' : 'is-bot'}`}
-            >
-              {message.text}
-            </p>
+            message.role === 'user' ? (
+              <p key={message.id} className="chatbot-message is-user">
+                {message.text}
+              </p>
+            ) : (
+              <div key={message.id} className="chatbot-message is-bot chatbot-markdown">
+                <ReactMarkdown>{message.text}</ReactMarkdown>
+              </div>
+            )
           ))}
 
           {isLoading ? (
@@ -222,6 +274,8 @@ export default function ChatbotWidget() {
               Thinking...
             </p>
           ) : null}
+
+          <div ref={messagesEndRef} />
         </div>
 
         <div className="chatbot-input-row">

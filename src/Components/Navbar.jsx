@@ -19,7 +19,18 @@ function ThemeToggleButton({ onToggleTheme, theme }) {
       aria-pressed={!isDarkTheme}
       title={actionLabel}
     >
-      <Icon className="text-base" />
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={theme}
+          initial={{ opacity: 0, scale: 0.7, rotate: -24 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          exit={{ opacity: 0, scale: 0.7, rotate: 24 }}
+          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+          className="inline-flex"
+        >
+          <Icon className="text-base" />
+        </motion.span>
+      </AnimatePresence>
     </button>
   )
 }
@@ -30,7 +41,7 @@ ThemeToggleButton.propTypes = {
 }
 
 export default function Navbar({ onToggleTheme, theme }) {
-  const [activeSection, setActiveSection] = useState('hero')
+  const activeSection = 'hero'
   const [isCompact, setIsCompact] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
 
@@ -42,29 +53,8 @@ export default function Navbar({ onToggleTheme, theme }) {
     updateOnScroll()
     window.addEventListener('scroll', updateOnScroll, { passive: true })
 
-    const observers = navigationSections
-      .map(({ id }) => document.getElementById(id))
-      .filter(Boolean)
-      .map((element) => {
-        const observer = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting) {
-              setActiveSection(entry.target.id)
-            }
-          },
-          {
-            rootMargin: '-32% 0px -48% 0px',
-            threshold: 0.18,
-          }
-        )
-
-        observer.observe(element)
-        return observer
-      })
-
     return () => {
       window.removeEventListener('scroll', updateOnScroll)
-      observers.forEach((observer) => observer.disconnect())
     }
   }, [])
 
@@ -98,8 +88,7 @@ export default function Navbar({ onToggleTheme, theme }) {
     }
   }, [isMobileOpen])
 
-  const scrollToSection = (sectionId) => {
-    if (sectionId === 'hero') {
+  const scrollToSection = (sectionId) => { if (sectionId === 'hero') {
       document.getElementById(sectionId)?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
