@@ -5,6 +5,7 @@ import ChatbotWidget from './Components/ChatbotWidget'
 import Hero from './Components/Hero'
 import Navbar from './Components/Navbar'
 import OrientationOverlay from './Components/OrientationOverlay'
+import Aurora from './component/Aurora'
 import portrait from './assets/my_pic.webp'
 import { projectsData } from './content'
 import { useProgressLoader } from './hooks/useProgressLoader'
@@ -12,6 +13,19 @@ import { useOrientationDetector } from './hooks/useOrientationDetector'
 import { THEME_STORAGE_KEY, resolveInitialTheme } from './theme'
 
 const criticalAssets = [portrait, ...projectsData.map((project) => project.image).filter(Boolean)]
+
+const fallbackAuroraStops = ['#93c5fd', '#6366f1', '#f8fafc']
+
+const resolveAuroraStopsFromTheme = () => {
+  const styles = window.getComputedStyle(document.documentElement)
+  const readVar = (name, fallback) => styles.getPropertyValue(name).trim() || fallback
+
+  return [
+    readVar('--accent', fallbackAuroraStops[0]),
+    readVar('--accent-strong', fallbackAuroraStops[1]),
+    readVar('--text', fallbackAuroraStops[2]),
+  ]
+}
 
 const deferredSections = [
   {
@@ -169,6 +183,7 @@ function App() {
   const [pendingScrollId, setPendingScrollId] = useState(null)
   const [preloadedSectionIds, setPreloadedSectionIds] = useState(() => new Set())
   const [theme, setTheme] = useState(resolveInitialTheme)
+  const [auroraColorStops, setAuroraColorStops] = useState(fallbackAuroraStops)
   const lastScrollRequestRef = useRef(null)
   const { complete } = useProgressLoader({
     assetUrls: criticalAssets,
@@ -195,6 +210,7 @@ function App() {
   useEffect(() => {
     document.documentElement.dataset.theme = theme
     document.documentElement.style.colorScheme = theme
+    setAuroraColorStops(resolveAuroraStopsFromTheme())
     window.localStorage.setItem(THEME_STORAGE_KEY, theme)
   }, [theme])
 
@@ -327,6 +343,14 @@ function App() {
   return (
     <div className="site-shell">
       <CustomCursor />
+      <div className="aurora-shell" aria-hidden="true">
+        <Aurora
+          colorStops={auroraColorStops}
+          blend={0.5}
+          amplitude={1.0}
+          speed={1}
+        />
+      </div>
       <div className="ambient-grid" aria-hidden="true" />
       <div className="ambient-orb ambient-orb-one" aria-hidden="true" />
       <div className="ambient-orb ambient-orb-two" aria-hidden="true" />

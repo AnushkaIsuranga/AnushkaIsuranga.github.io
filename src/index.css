@@ -403,6 +403,13 @@
     pointer-events: none;
   }
 
+  .aurora-shell {
+    position: fixed;
+    inset: 0;
+    opacity: 0.38;
+    pointer-events: none;
+  }
+
   .ambient-orb {
     position: fixed;
     border-radius: 9999px;
