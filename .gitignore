@@ -23,6 +23,8 @@ dist-ssr
 *.sw?
 vendor/phpmailer/phpmailer/
 
+/dist
+/build
 *.env
 .env
 .env.*

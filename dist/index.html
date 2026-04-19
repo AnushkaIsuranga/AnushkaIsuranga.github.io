@@ -52,6 +52,7 @@
         content: '';
         position: absolute;
         inset: 0;
+        z-index: 1;
         opacity: 0.18;
         background-image:
           linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
@@ -70,7 +71,15 @@
       .boot-center,
       .boot-bottom {
         position: relative;
-        z-index: 1;
+        z-index: 2;
+      }
+
+      .boot-background {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+        pointer-events: none;
       }
 
       .boot-top {
@@ -126,6 +135,12 @@
         width: 100%;
         max-width: 900px;
         text-align: center;
+      }
+
+      .boot-dotfield {
+        z-index: 1;
+        width: 100%;
+        height: 100%;
       }
 
       .boot-kicker {
@@ -334,12 +349,16 @@
         window.gtag('config', 'G-0FJH61PY0G')
       }
     </script>
-    <script type="module" crossorigin src="./assets/index-DXSg4yh7.js"></script>
-    <link rel="modulepreload" crossorigin href="./assets/vendor-BgwycYJG.js">
-    <link rel="stylesheet" crossorigin href="./assets/index-DZc8edFX.css">
+    <script type="module" crossorigin src="./assets/index-CYqLAs8J.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/vendor-yXRYaY_D.js">
+    <link rel="stylesheet" crossorigin href="./assets/index-CzreKF8q.css">
   </head>
   <body>
     <div id="boot-preloader" aria-hidden="true">
+      <div class="boot-background" aria-hidden="true">
+        <div id="boot-dotfield" class="boot-dotfield"></div>
+      </div>
+
       <div class="boot-top">
         <div class="boot-brand">
           <img src="./favicon.webp" alt="" width="34" height="34" />
@@ -418,6 +437,7 @@
             return
           }
 
+          window.dispatchEvent(new CustomEvent('bootloader:hide'))
           bootLoader.classList.add('is-hidden')
           window.setTimeout(() => {
             bootLoader.remove()
