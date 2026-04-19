@@ -41,54 +41,55 @@ ThemeToggleButton.propTypes = {
 }
 
 export default function Navbar({ onToggleTheme, theme }) {
-  const activeSection = 'hero'
   const [isCompact, setIsCompact] = useState(false)
-  const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const [activeSection, setActiveSection] = useState('hero')
 
   useEffect(() => {
     const updateOnScroll = () => {
+      const doc = document.documentElement
+      const scrollTop = Math.max(window.scrollY, 0)
+      const scrollableHeight = Math.max(doc.scrollHeight - window.innerHeight, 1)
+
       setIsCompact(window.scrollY > 36)
+      setScrollProgress(Math.min(100, (scrollTop / scrollableHeight) * 100))
+
+      let currentSectionId = 'hero'
+      const threshold = window.innerHeight * 0.35
+
+      for (const section of navigationSections) {
+        const node = document.getElementById(section.id)
+        if (!node) {
+          continue
+        }
+
+        const { top } = node.getBoundingClientRect()
+        if (top <= threshold) {
+          currentSectionId = section.id
+        }
+      }
+
+      setActiveSection(currentSectionId)
     }
 
     updateOnScroll()
     window.addEventListener('scroll', updateOnScroll, { passive: true })
+    window.addEventListener('resize', updateOnScroll)
 
     return () => {
       window.removeEventListener('scroll', updateOnScroll)
+      window.removeEventListener('resize', updateOnScroll)
     }
   }, [])
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setIsMobileOpen(false)
-      }
-    }
+  const activeIndex = Math.max(
+    0,
+    navigationSections.findIndex((section) => section.id === activeSection),
+  )
+  const nextSection = navigationSections[Math.min(activeIndex + 1, navigationSections.length - 1)]
 
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
-  useEffect(() => {
-    if (typeof document === 'undefined') {
-      return undefined
-    }
-
-    const previousOverflow = document.body.style.overflow
-    const previousTouchAction = document.body.style.touchAction
-
-    if (isMobileOpen) {
-      document.body.style.overflow = 'hidden'
-      document.body.style.touchAction = 'none'
-    }
-
-    return () => {
-      document.body.style.overflow = previousOverflow
-      document.body.style.touchAction = previousTouchAction
-    }
-  }, [isMobileOpen])
-
-  const scrollToSection = (sectionId) => { if (sectionId === 'hero') {
+  const scrollToSection = (sectionId) => {
+    if (sectionId === 'hero') {
       document.getElementById(sectionId)?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
@@ -96,21 +97,10 @@ export default function Navbar({ onToggleTheme, theme }) {
     } else {
       window.dispatchEvent(new CustomEvent('portfolio:navigate', { detail: { sectionId } }))
     }
-
-    setIsMobileOpen(false)
   }
 
   return (
     <div className="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8">
-      {isMobileOpen ? (
-        <button
-          type="button"
-          aria-label="Close mobile navigation"
-          className="pointer-events-auto fixed inset-0 z-40 bg-slate-950/35 backdrop-blur-md md:hidden"
-          onClick={() => setIsMobileOpen(false)}
-        />
-      ) : null}
-
       <motion.nav
         className="nav-shell pointer-events-auto relative z-50 mx-auto flex w-full max-w-[1240px] items-center justify-between gap-3 rounded-[1.6rem] pl-3 pr-3 py-3"
         animate={{
@@ -132,7 +122,7 @@ export default function Navbar({ onToggleTheme, theme }) {
             className="h-11 w-11 rounded-2xl border border-white/10 bg-white/5 object-cover p-1 shadow-[0_14px_32px_rgba(8,15,30,0.36)]"
           />
 
-          <span className="hidden sm:block">
+          <span className="hidden md:block">
             <span className="block text-sm font-semibold text-white">{siteContent.site.name}</span>
             <span className="block text-[11px] uppercase tracking-[0.24em] text-slate-400">
               {siteContent.site.role}
@@ -140,105 +130,21 @@ export default function Navbar({ onToggleTheme, theme }) {
           </span>
         </button>
 
-        <div className="flex items-center gap-2 md:hidden">
-          <ThemeToggleButton theme={theme} onToggleTheme={onToggleTheme} />
-
-          <button
-            type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-slate-200"
-            onClick={() => setIsMobileOpen((current) => !current)}
-            aria-label={isMobileOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={isMobileOpen}
-            aria-controls="mobile-nav-panel"
-          >
-            <span className="relative h-4 w-5">
-              <span
-                className={`absolute left-0 top-0 h-[2px] w-5 rounded bg-current transition-all duration-300 ${
-                  isMobileOpen ? 'top-[7px] rotate-45' : ''
-                }`}
+        <div className="min-w-0 flex-1 px-1">
+          <div className="mx-auto flex w-full max-w-[34rem] flex-col gap-2">
+            <div className="h-2 w-full overflow-hidden rounded-full border border-white/10 bg-white/5">
+              <motion.span
+                className="block h-full rounded-full bg-[linear-gradient(90deg,#7dd3fc_0%,#818cf8_56%,#a78bfa_100%)]"
+                animate={{ width: `${scrollProgress}%` }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
               />
-              <span
-                className={`absolute left-0 top-[7px] h-[2px] w-5 rounded bg-current transition-all duration-300 ${
-                  isMobileOpen ? 'opacity-0' : 'opacity-100'
-                }`}
-              />
-              <span
-                className={`absolute left-0 top-[14px] h-[2px] w-5 rounded bg-current transition-all duration-300 ${
-                  isMobileOpen ? 'top-[7px] -rotate-45' : ''
-                }`}
-              />
-            </span>
-          </button>
-        </div>
+            </div>
 
-        <div className="hidden md:ml-auto md:flex">
-          <div className="no-scrollbar inline-flex w-fit items-center gap-1 overflow-x-auto rounded-full bg-white/[0.03] p-1">
-            {navigationSections.map((section) => {
-              const isActive = activeSection === section.id
-
-              return (
-                <button
-                  key={section.id}
-                  type="button"
-                  onClick={() => scrollToSection(section.id)}
-                  className="relative flex h-11 items-center whitespace-nowrap rounded-full px-4 text-sm font-medium text-slate-300 transition-colors duration-300 hover:text-white"
-                  aria-label={`Go to ${section.label}`}
-                >
-                  {isActive ? (
-                    <motion.span
-                      layoutId="nav-active-pill"
-                      className="absolute inset-0 rounded-full bg-[linear-gradient(135deg,rgba(125,211,252,0.18),rgba(99,102,241,0.22),rgba(167,139,250,0.18))]"
-                      transition={{
-                        type: 'spring',
-                        stiffness: 360,
-                        damping: 30,
-                      }}
-                    />
-                  ) : null}
-                  <span className="relative z-10">{section.label}</span>
-                </button>
-              )
-            })}
-
-            <ThemeToggleButton theme={theme} onToggleTheme={onToggleTheme} />
           </div>
         </div>
+
+        <ThemeToggleButton theme={theme} onToggleTheme={onToggleTheme} />
       </motion.nav>
-
-      <AnimatePresence>
-        {isMobileOpen ? (
-          <motion.div
-            id="mobile-nav-panel"
-            className="nav-shell pointer-events-auto relative z-50 mx-auto mt-2 w-full max-w-[1240px] rounded-[1.35rem] p-2 md:hidden"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <div className="grid gap-1">
-              {navigationSections.map((section) => {
-                const isActive = activeSection === section.id
-
-                return (
-                  <button
-                    key={section.id}
-                    type="button"
-                    onClick={() => scrollToSection(section.id)}
-                    className={`w-full rounded-xl px-4 py-3 text-left text-sm font-medium transition-colors duration-200 ${
-                      isActive
-                        ? 'bg-[linear-gradient(135deg,rgba(125,211,252,0.18),rgba(99,102,241,0.22),rgba(167,139,250,0.18))] text-white'
-                        : 'text-slate-300 hover:bg-white/[0.05] hover:text-white'
-                    }`}
-                    aria-label={`Go to ${section.label}`}
-                  >
-                    {section.label}
-                  </button>
-                )
-              })}
-            </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
     </div>
   )
 }
