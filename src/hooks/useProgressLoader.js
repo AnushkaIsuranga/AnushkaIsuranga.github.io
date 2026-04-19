@@ -52,7 +52,7 @@ const preloadImage = (source) =>
 const withTimeout = (task, timeoutMs) => Promise.race([task, wait(timeoutMs)])
 
 export function useProgressLoader(options = {}) {
-  const { assetUrls = [], minDurationMs = 3000, maxTaskMs = 1800 } = options
+  const { assetUrls = [], minDurationMs = 5000, maxTaskMs = 1800 } = options
 
   const [progress, setProgress] = useState(() => readBootProgress())
   const [status, setStatus] = useState('Loading shell')

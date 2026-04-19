@@ -7,12 +7,19 @@ import './index.css'
 
 const initialTheme = resolveInitialTheme()
 
+const isMobileUserAgent =
+  (navigator.userAgentData?.mobile ?? false) ||
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+const isTouchViewport = window.matchMedia('(hover: none) and (pointer: coarse)').matches
+const isMobileViewport = window.matchMedia('(max-width: 1024px)').matches
+const shouldDisableBootDotField = isMobileUserAgent || (isTouchViewport && isMobileViewport)
+
 document.documentElement.dataset.theme = initialTheme
 document.documentElement.style.colorScheme = initialTheme
 
 const bootDotFieldHost = document.getElementById('boot-dotfield')
 
-if (bootDotFieldHost) {
+if (bootDotFieldHost && !shouldDisableBootDotField) {
   const bootDotFieldRoot = createRoot(bootDotFieldHost)
 
   bootDotFieldRoot.render(
