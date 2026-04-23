@@ -220,7 +220,7 @@ export default function ChatbotWidget() {
         error instanceof Error &&
         (error.message.includes('401') || error.message.includes('403'))
       ) {
-        pushMessage('bot', 'API key is invalid. Check VITE_GROQ_API_KEY in your .env file.')
+        pushMessage('bot', 'API key is invalid.')
       } else {
         pushMessage('bot', 'I could not answer right now. Please try again in a moment.')
       }

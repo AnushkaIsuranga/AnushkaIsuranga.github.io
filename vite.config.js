@@ -19,9 +19,7 @@ export default defineConfig({
     assetsDir: 'assets',
     minify: 'terser',
     terserOptions: {
-      compress: {
-        drop_console: true,
-      },
+      compress: {},
     },
     rollupOptions: {
       output: {
