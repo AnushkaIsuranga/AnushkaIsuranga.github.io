@@ -107,17 +107,19 @@ function ProjectCaseStudy({ project, index }) {
               </div>
 
               <div className="mt-6 flex flex-wrap gap-3">
-                <motion.a
-                  href={project.githubRepo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="button-secondary"
-                  whileHover={{ y: -4 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <FiGithub />
-                  Source
-                </motion.a>
+                {project.githubRepo?.trim() && (
+                  <motion.a
+                    href={project.githubRepo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="button-secondary"
+                    whileHover={{ y: -4 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <FiGithub />
+                    Source
+                  </motion.a>
+                )}
 
                 {project.liveDemo ? (
                   <motion.a
@@ -213,17 +215,19 @@ function ProjectCaseStudy({ project, index }) {
               </div>
 
               <div className="flex flex-wrap gap-3">
-                <motion.a
-                  href={project.githubRepo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="button-secondary"
-                  whileHover={{ y: -4 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <FiGithub />
-                  Source
-                </motion.a>
+                {project.githubRepo?.trim() && (
+                  <motion.a
+                    href={project.githubRepo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="button-secondary"
+                    whileHover={{ y: -4 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <FiGithub />
+                    Source
+                  </motion.a>
+                )}
 
                 {project.liveDemo ? (
                   <motion.a

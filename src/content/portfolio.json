@@ -418,6 +418,20 @@
       "liveDemo": "https://hospital-appointment-system-delta.vercel.app/"
     },
     {
+      "title": "IntMind AI Sobriety Coach",
+      "category": "AI-powered recovery companion mobile application",
+      "year": "2026",
+      "imageKey": "sobriety_app",
+      "summary": "An AI-powered mobile app designed to support alcohol recovery by helping users track moods, cravings, and triggers while receiving personalized guidance.",
+      "challenge": "Create a system that provides consistent support between therapy sessions while keeping the experience simple, private, and engaging for users in recovery.",
+      "delivery": "Built a cross-platform mobile app using React Native (Expo) with backend services in FastAPI and Express.js, integrating AI conversation workflows using LangChain and AutoGen.",
+      "impact": "Demonstrates how AI companions can support behavioral change through daily tracking, contextual conversations, and personalized suggestions.",
+      "stack": ["React Native", "Expo", "TypeScript", "FastAPI", "Express.js", "LangChain", "AutoGen", "NoSQL Database", "NativeWind"],
+      "metrics": ["Daily mood and craving tracking", "AI companion chat", "Personalized suggestions", "Smart reminders and progress tracking"],
+      "githubRepo": "",
+      "liveDemo": ""
+    },
+    {
       "title": "Asteria Desk Hotel Booking System",
       "category": "Web-based hospitality management system",
       "year": "2026",
