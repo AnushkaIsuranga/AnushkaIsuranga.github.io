@@ -7,8 +7,8 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "dev": "vite",
-    "start": "vite",
+    "dev": "node scripts/without-groq-env.js vite",
+    "start": "node scripts/without-groq-env.js vite",
     "build": "vite build",
     "build:perf": "node scripts/build-perf.js",
     "build:analyze": "vite build --sourcemap && node scripts/analyze-bundle.js",

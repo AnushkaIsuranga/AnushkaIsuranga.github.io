@@ -142,8 +142,13 @@ export default function ChatbotWidget() {
     }
 
     if (!groqApiKey) {
-      pushMessage('bot', 'Groq API key is missing. Set VITE_GROQ_API_KEY in your .env file.')
+      pushMessage('bot', 'Groq API key is missing.')
       return
+    }
+
+    const trimmedKey = groqApiKey.trim()
+    if (trimmedKey.length !== groqApiKey.length) {
+      console.warn('Groq API key has surrounding whitespace; trimming it before use.')
     }
 
     const recentHistory = history.slice(-MAX_HISTORY_ITEMS)
@@ -163,11 +168,13 @@ export default function ChatbotWidget() {
     const delay = new Promise((resolve) => window.setTimeout(resolve, RESPONSE_DELAY_MS))
 
     try {
+      const authHeader = `Bearer ${trimmedKey}`
+
       const response = await fetch(GROQ_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${groqApiKey}`,
+          Authorization: authHeader,
         },
         body: JSON.stringify({
           model: GROQ_MODEL,
