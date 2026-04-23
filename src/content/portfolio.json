@@ -429,7 +429,7 @@
       "stack": ["PHP", "Laravel", "Inertia.js", "React", "TypeScript", "SQLite", "Tailwind CSS", "Vite", "MVC Architecture"],
       "metrics": ["Role-based staff/admin access", "Booking and inventory management", "Operational dashboard", "Responsive UI"],
       "githubRepo": "https://github.com/AnushkaIsuranga/hotel_booking_system",
-      "liveDemo": ""
+      "liveDemo": "https://p01--hotel-booking-system--46r4h4wlr8dj.code.run/"
     },
     {
       "title": "Dilthira Stock Portal",
