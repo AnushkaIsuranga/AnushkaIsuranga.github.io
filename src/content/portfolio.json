@@ -234,6 +234,7 @@
           { "label": "Docker", "iconKey": "docker" },
           { "label": "GitHub Actions", "iconKey": "githubActions" },
           { "label": "Vercel", "iconKey": "vercel" }
+          {  "label": "Render", "iconKey": "render" }
         ]
       },
       {
@@ -440,10 +441,10 @@
       "challenge": "Structure a real-world hotel management workflow with clear separation of concerns, role-based access, and maintainable data handling across bookings, rooms, and team accounts.",
       "delivery": "Built the system with Laravel, Inertia.js, React, and TypeScript using an MVC pattern for authentication, CRUD workflows, dashboard reporting, and hotel operations management.",
       "impact": "Demonstrated how a full-stack Laravel application can stay organized, scalable, and user-friendly while handling core hospitality operations in one place.",
-      "stack": ["PHP", "Laravel", "Inertia.js", "React", "TypeScript", "SQLite", "Tailwind CSS", "Vite", "MVC Architecture"],
+      "stack": ["PHP", "Laravel", "Inertia.js", "React", "TypeScript", "SQLite", "Tailwind CSS", "Render", "Vite", "MVC Architecture"],
       "metrics": ["Role-based staff/admin access", "Booking and inventory management", "Operational dashboard", "Responsive UI"],
       "githubRepo": "https://github.com/AnushkaIsuranga/hotel_booking_system",
-      "liveDemo": "https://p01--hotel-booking-system--46r4h4wlr8dj.code.run/"
+      "liveDemo": "https://hotel-booking-system-ihcv.onrender.com/"
     },
     {
       "title": "Dilthira Stock Portal",
