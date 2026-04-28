@@ -1,4 +1,4 @@
-import { FaJava, FaReact, FaLaravel  } from 'react-icons/fa'
+import { FaJava, FaReact, FaLaravel,  } from 'react-icons/fa'
 import { PiFileCSharp } from 'react-icons/pi'
 import {
   SiAmazonwebservices,
@@ -45,7 +45,8 @@ import {
   SiVisualstudiocode,
   SiVite,
   SiDotnet,
-  SiInertia
+  SiInertia,
+  SiRender 
 } from 'react-icons/si'
 import { motion } from 'motion/react'
 import MobileParallax from '../Animation/MobileParallax'
@@ -94,6 +95,7 @@ const stackIconMap = {
   python: SiPython,
   react: FaReact,
   reactnative: FaReact,
+  render: SiRender,
   sqlite: SiSqlite,
   springboot: SiSpringboot,
   swagger: SiSwagger,
