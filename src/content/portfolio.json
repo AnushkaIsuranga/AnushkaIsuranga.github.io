@@ -233,8 +233,8 @@
           { "label": "AWS", "iconKey": "aws" },
           { "label": "Docker", "iconKey": "docker" },
           { "label": "GitHub Actions", "iconKey": "githubActions" },
-          { "label": "Vercel", "iconKey": "vercel" }
-          {  "label": "Render", "iconKey": "render" }
+          { "label": "Vercel", "iconKey": "vercel" },
+          { "label": "Render", "iconKey": "render" }
         ]
       },
       {
